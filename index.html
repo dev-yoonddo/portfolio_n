@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>정윤서 · Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:        #FFFFFF;
+  --bg2:       #F7F7F5;
+  --bg3:       #EFEFED;
+  --border:    #E5E5E3;
+  --text:      #1A1A1A;
+  --text2:     #555550;
+  --text3:     #9B9B97;
+  --accent:    #2F6FED;
+  --accent-bg: #EEF3FD;
+  --tag-bg:    #F0F0EE;
+  --tag-text:  #37352F;
+  --red:       #E03E3E;
+  --green:     #0F7B6C;
+  --mono:      'DM Mono', monospace;
+  --sans:      'Noto Sans KR', sans-serif;
+  --side:      240px;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.7; font-size: 16px; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+.layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: var(--side); flex-shrink: 0; position: fixed; top: 0; left: 0;
+  height: 100vh; padding: 40px 20px 40px 28px; border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; background: var(--bg); z-index: 100; overflow-y: auto;
+}
+.sidebar-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; letter-spacing: -0.3px; }
+.sidebar-role { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-bottom: 28px; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-item { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 5px; font-size: 13.5px; color: var(--text2); cursor: pointer; transition: background 0.15s, color 0.15s; font-weight: 500; }
+.nav-item:hover, .nav-item.active { background: var(--bg2); color: var(--text); }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.15s; }
+.nav-item.active .nav-dot { background: var(--accent); }
+.sidebar-bottom { margin-top: auto; padding-top: 24px; border-top: 1px solid var(--border); }
+.sidebar-link { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text3); padding: 4px 0; transition: color 0.15s; }
+.sidebar-link:hover { color: var(--text); }
+
+.main { margin-left: var(--side); flex: 1; max-width: 900px; padding: 80px 72px 120px 72px; }
+
+/* HERO */
+.hero { padding-bottom: 56px; border-bottom: 1px solid var(--border); margin-bottom: 64px; }
+.hero-emoji { font-size: 52px; line-height: 1; margin-bottom: 20px; display: block; animation: wave 2.5s ease-in-out infinite; transform-origin: 70% 70%; width: fit-content; }
+@keyframes wave { 0%,60%,100%{transform:rotate(0deg)} 10%,30%{transform:rotate(14deg)} 20%{transform:rotate(-8deg)} 40%{transform:rotate(-4deg)} 50%{transform:rotate(10deg)} }
+.hero-name { font-size: 42px; font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 6px; }
+.hero-name span { color: var(--accent); }
+.hero-sub { font-size: 16px; color: var(--text2); font-family: var(--mono); margin-bottom: 24px; }
+.hero-desc { font-size: 16.5px; color: var(--text2); line-height: 1.85; max-width: 580px; }
+.hero-desc strong { color: var(--text); font-weight: 700; }
+.hero-quote { margin-top: 18px; font-size: 14px; color: var(--text3); font-style: italic; padding-left: 14px; border-left: 2px solid var(--border); line-height: 1.7; }
+.hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-family: var(--mono); background: var(--bg2); border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; color: var(--text2); font-weight: 500; }
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; flex-shrink: 0; }
+
+/* SECTION */
+.section { margin-bottom: 64px; opacity: 0; transform: translateY(24px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-header { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
+.section-icon { font-size: 18px; width: 32px; text-align: center; flex-shrink: 0; }
+.section-title { font-size: 15px; font-weight: 700; color: var(--text3); letter-spacing: 2.5px; text-transform: uppercase; font-family: var(--mono); }
+
+/* ABOUT */
+.about-text { font-size: 16.5px; color: var(--text2); line-height: 1.9; }
+.about-text strong { color: var(--text); font-weight: 700; }
+.about-text + .about-text { margin-top: 14px; }
+.about-quote { margin-top: 20px; font-size: 15px; color: var(--text2); font-style: italic; padding: 14px 18px; background: var(--bg2); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; line-height: 1.75; }
+.stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+.stat-val { font-size: 24px; font-weight: 900; letter-spacing: -1px; line-height: 1; font-family: var(--mono); }
+.stat-val span { font-size: 13px; font-weight: 500; color: var(--accent); margin-left: 2px; }
+.stat-label { font-size: 12px; color: var(--text3); margin-top: 5px; }
+
+/* SKILLS */
+.skill-group { margin-bottom: 22px; }
+.skill-group:last-child { margin-bottom: 0; }
+.skill-group-label { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; font-family: var(--mono); margin-bottom: 10px; }
+.skill-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip { font-size: 13px; font-weight: 500; padding: 5px 12px; border-radius: 5px; font-family: var(--mono); transition: transform 0.15s; cursor: default; }
+.chip:hover { transform: translateY(-1px); }
+.chip-primary { background: var(--text); color: #fff; }
+.chip-secondary { background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--border); }
+.chip-learning { background: #fff; color: var(--text3); border: 1.5px dashed var(--border); }
+
+/* PROJECT CARD */
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: box-shadow 0.22s, border-color 0.22s;
+  position: relative;
+}
+.project-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border-color: #D0D0CE;
+}
+
+.proj-hover-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: rgba(245, 245, 243, 0.82);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  z-index: 10;
+}
+.project-card:not(.open):hover .proj-hover-overlay {
+  opacity: 1;
+  pointer-events: none;
+}
+.project-card.open .proj-hover-overlay {
+  display: none;
+}
+
+.proj-overlay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 24px;
+  background: var(--text);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: var(--mono);
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+  transform: scale(0.96);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  pointer-events: none;
+  user-select: none;
+}
+.project-card:not(.open):hover .proj-overlay-btn {
+  transform: scale(1);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.proj-overlay-btn svg { flex-shrink: 0; opacity: 0.9; }
+
+.proj-header {
+  padding: 22px 26px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  user-select: none;
+  transition: background 0.15s;
+}
+.proj-header:hover { background: var(--bg2); }
+.proj-left { flex: 1; }
+.proj-title { font-size: 17px; font-weight: 800; letter-spacing: -0.3px; line-height: 1.3; margin-bottom: 5px; }
+.proj-stack { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+.proj-kpis { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+.kpi { font-size: 12px; font-weight: 700; font-family: var(--mono); background: var(--text); color: #fff; padding: 3px 10px; border-radius: 4px; }
+.proj-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.proj-period { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+.proj-tag { font-size: 11px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
+
+.proj-toggle-icon {
+  margin-top: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 5px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.25s;
+  flex-shrink: 0;
+}
+.project-card.open .proj-toggle-icon { transform: rotate(180deg); background: var(--bg3); }
+
+.proj-detail { max-height: 0; overflow: hidden; transition: max-height 0.45s ease; }
+.project-card.open .proj-detail { max-height: 5000px; border-top: 1px solid var(--border); }
+.proj-detail-inner { padding: 28px 26px; }
+
+/* 상세 내부 */
+.detail-block { margin-bottom: 26px; }
+.detail-block:last-child { margin-bottom: 0; }
+.detail-label { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; font-family: var(--mono); margin-bottom: 12px; }
+.overview-text { font-size: 15.5px; color: var(--text2); line-height: 1.85; }
+
+.problem-block, .solution-block, .result-block { border-radius: 0 6px 6px 0; padding: 14px 16px; margin-bottom: 12px; }
+.problem-block { background: #FFF5F5; border-left: 3px solid var(--red); }
+.solution-block { background: #F0FAF8; border-left: 3px solid var(--green); }
+.result-block { background: var(--accent-bg); border-left: 3px solid var(--accent); }
+.block-label { font-size: 10.5px; font-weight: 700; font-family: var(--mono); letter-spacing: 1px; margin-bottom: 8px; }
+.problem-block .block-label { color: var(--red); }
+.solution-block .block-label { color: var(--green); }
+.result-block .block-label { color: var(--accent); }
+.block-text { font-size: 14.5px; color: var(--text2); line-height: 1.8; }
+.block-text strong { color: var(--text); font-weight: 700; }
+
+.code-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; font-family: var(--mono); font-size: 12.5px; color: var(--text2); line-height: 1.8; white-space: pre-wrap; margin: 10px 0; }
+
+.detail-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.detail-list li { font-size: 15px; color: var(--text2); line-height: 1.65; padding-left: 16px; position: relative; }
+.detail-list li::before { content: '–'; position: absolute; left: 0; color: var(--border); }
+.detail-list li strong { color: var(--text); font-weight: 700; }
+
+.detail-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
+.detail-table th { background: var(--bg2); padding: 8px 12px; text-align: left; font-weight: 700; color: var(--text2); border: 1px solid var(--border); font-size: 12px; }
+.detail-table td { padding: 8px 12px; border: 1px solid var(--border); color: var(--text2); line-height: 1.55; }
+.detail-table tr:hover td { background: var(--bg2); }
+
+.flow-block { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 16px 18px; margin: 10px 0; }
+.flow-block p { font-size: 13px; color: var(--text2); line-height: 2.1; font-family: var(--mono); }
+
+.inline-code { background: var(--bg3); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; }
+
+/* SIDE */
+.side-card { border: 1px solid var(--border); border-radius: 10px; padding: 24px 26px; transition: box-shadow 0.2s, border-color 0.2s; }
+.side-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-color: #D0D0CE; }
+.side-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+.side-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
+.side-links { display: flex; gap: 10px; }
+.side-link { font-size: 12px; font-family: var(--mono); color: var(--accent); padding: 3px 9px; border: 1px solid var(--accent-bg); border-radius: 4px; background: var(--accent-bg); transition: background 0.15s; }
+.side-link:hover { background: #dde8fb; }
+.side-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); margin-bottom: 14px; }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.contact-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px; transition: background 0.15s, border-color 0.15s; }
+.contact-item:hover { background: var(--bg2); border-color: #D0D0CE; }
+.contact-icon { width: 32px; height: 32px; background: var(--bg2); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.contact-label { font-size: 11px; color: var(--text3); font-family: var(--mono); font-weight: 500; display: block; }
+.contact-val { font-size: 13.5px; color: var(--text); font-weight: 600; }
+
+/* HERO PROFILE */
+.hero-inner { display: flex; align-items: flex-start; gap: 48px; }
+.hero-text  { flex: 1; min-width: 0; }
+.hero-photo {
+  flex-shrink: 0;
+  width: 220px;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-top: 6px;
+}
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.hero-photo:hover img { transform: scale(1.04); }
+
+@media (max-width: 768px) {
+  .hero-inner { flex-direction: column-reverse; gap: 24px; }
+  .hero-photo { width: 100px; height: 100px; border-radius: 12px; margin-top: 0; }
+}
+
+/* SCREENSHOT GALLERY */
+.screenshot-gallery { margin-top: 28px; }
+.screenshot-section { margin-bottom: 24px; }
+.screenshot-label { font-size: 11px; font-weight: 700; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; font-family: var(--mono); margin-bottom: 10px; }
+.screenshot-grid { display: grid; gap: 10px; }
+.screenshot-grid.col-1 { grid-template-columns: 1fr; }
+.screenshot-grid.col-2 { grid-template-columns: 1fr 1fr; }
+
+/* screenshot-wrap: 모든 img를 감싸는 공통 래퍼 */
+.screenshot-wrap {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: zoom-in;
+  display: block;
+}
+.screenshot-img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: block;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+.screenshot-wrap:hover .screenshot-img {
+  transform: scale(1.02);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
+  filter: brightness(0.88);
+}
+
+/* 호버 힌트 오버레이 */
+.screenshot-zoom-hint {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+.screenshot-wrap:hover .screenshot-zoom-hint { opacity: 1; }
+
+.screenshot-zoom-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: var(--text);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.14);
+  letter-spacing: 0.2px;
+  transform: scale(0.92) translateY(4px);
+  transition: transform 0.22s ease;
+  pointer-events: none;
+  user-select: none;
+}
+.screenshot-wrap:hover .screenshot-zoom-btn {
+  transform: scale(1) translateY(0);
+}
+
+/* IMAGE MODAL */
+.img-modal-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+.img-modal-overlay.open { opacity: 1; pointer-events: all; }
+.img-modal-box {
+  position: relative; max-width: 90vw; max-height: 88vh;
+  border-radius: 12px; overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  transform: scale(0.94) translateY(10px);
+  transition: transform 0.25s ease;
+}
+.img-modal-overlay.open .img-modal-box { transform: scale(1) translateY(0); }
+.img-modal-box img { display: block; max-width: 90vw; max-height: 88vh; object-fit: contain; }
+.img-modal-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(0,0,0,0.55); color: #fff;
+  border: none; cursor: pointer; font-size: 18px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, transform 0.15s;
+  z-index: 2;
+}
+.img-modal-close:hover { background: rgba(0,0,0,0.85); transform: scale(1.1); }
+.img-modal-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 10px 16px;
+  background: rgba(0,0,0,0.48);
+  color: #fff; font-size: 12px; font-family: var(--mono);
+  text-align: center;
+}
+
+.footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); font-family: var(--mono); }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 48px 24px 80px; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .hero-name { font-size: 32px; }
+  .screenshot-grid.col-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-name">정윤서</div>
+    <div class="sidebar-role">Developer</div>
+    <nav class="nav">
+      <a class="nav-item active" href="#about"><span class="nav-dot"></span> About Me</a>
+      <a class="nav-item" href="#skills"><span class="nav-dot"></span> Skills</a>
+      <a class="nav-item" href="#career"><span class="nav-dot"></span> Career</a>
+      <a class="nav-item" href="#side"><span class="nav-dot"></span> Side Project</a>
+      <a class="nav-item" href="#contact"><span class="nav-dot"></span> Contact</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a class="sidebar-link" href="https://github.com/dev-yoonddo" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        github.com/dev-yoonddo
+      </a>
+      <a class="sidebar-link" href="https://velog.io/@yoonddo" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zm5 3a1 1 0 000 2h8a1 1 0 100-2H8zm0 4a1 1 0 000 2h5a1 1 0 100-2H8z"/></svg>
+        velog.io/@yoonddo
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1 class="hero-name">복잡함을 줄이고,<br><span>구조로 말합니다.</span></h1>
+          <p class="hero-sub">정윤서 · Developer · 2024.05 ~ 현재</p>
+          <p class="hero-desc">
+            Java · Spring Boot 기반 2년차 백엔드 개발자입니다.<br>
+            사용하는 사람과 유지보수하는 사람 모두를 위한 <strong>이해도 높은 구조</strong>로 개발하는 것을 중요하게 생각합니다.
+          </p>
+          <div class="hero-badges">
+            <span class="badge"><span class="badge-dot"></span> 재직 중 · 엔소프트웨어</span>
+            <span class="badge">⚙️ ISTP</span>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <img src="data:image/jpeg;base64,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" alt="정윤서 프로필 사진" />
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT ME -->
+    <section class="section" id="about">
+      <div class="section-header">
+        <span class="section-icon">🙋</span>
+        <span class="section-title">About Me</span>
+      </div>
+      <p class="about-text">공공기관 프로젝트에서 <strong>쿼리 최적화와 인덱스 개선</strong>으로 응답 시간을 40초에서 1초로 줄였고, <strong>Jenkins 배포 자동화</strong>로 배포 시간을 80% 단축했습니다. 외부 API 연동, 게시판·보고서 시스템 고도화, 사내 공통 프레임워크 설계까지 폭넓은 실무 경험을 쌓았습니다.</p>
+      <p class="about-text">동작하는 코드보다 <strong>6개월 뒤에도 읽기 쉬운 코드</strong>를 더 중요하게 생각합니다. 구조를 먼저 고민하고, 그 구조가 팀 전체의 속도를 높인다고 믿습니다.</p>
+      <div class="about-quote">"코드는 결국 사람이 읽고, 사람이 고친다"는 생각을 기준으로 선택합니다.</div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-val">97.5<span>%</span></div><div class="stat-label">쿼리 응답 단축<br>40초 → 1초</div></div>
+        <div class="stat-card"><div class="stat-val">80<span>%</span></div><div class="stat-label">배포 시간 단축<br>10분 → 2분</div></div>
+        <div class="stat-card"><div class="stat-val">4<span>개</span></div><div class="stat-label">운영망 자동화<br>Jenkins 파이프라인</div></div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="section-header"><span class="section-icon">🛠</span><span class="section-title">Skills</span></div>
+      <div class="skill-group">
+        <div class="skill-group-label">사용 기술</div>
+        <div class="skill-chips">
+          <span class="chip chip-secondary">Java</span><span class="chip chip-secondary">Spring Boot</span><span class="chip chip-secondary">MyBatis</span><span class="chip chip-secondary">Oracle</span><span class="chip chip-secondary">JPA</span><span class="chip chip-secondary">MySQL</span><span class="chip chip-secondary">MariaDB</span><span class="chip chip-secondary">PostgreSQL</span><span class="chip chip-secondary">AWS EC2/RDS</span><span class="chip chip-secondary">Thymeleaf</span><span class="chip chip-secondary">JavaScript</span><span class="chip chip-secondary">jQuery</span><span class="chip chip-secondary">Jenkins</span><span class="chip chip-secondary">GitLab</span><span class="chip chip-secondary">Linux</span><span class="chip chip-secondary">Tomcat / WebLogic</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">학습 중</div>
+        <div class="skill-chips">
+          <span class="chip chip-learning">JPA (CRUD · 연관관계 매핑)</span><span class="chip chip-learning">Vue.js (화면 구성 · API 연동)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREER -->
+    <section class="section" id="career">
+      <div class="section-header"><span class="section-icon">💼</span><span class="section-title">Career</span></div>
+
+      <!-- 프로젝트 1 -->
+      <div class="project-card" id="proj1">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
+        </div>
+        <div class="proj-header" onclick="toggleCard('proj1')">
+          <div class="proj-left">
+            <div class="proj-title">공공기관 내부 시스템 고도화</div>
+            <div class="proj-stack">Java · Spring Boot · MyBatis · Oracle · JavaScript · jQuery · Jenkins</div>
+            <div class="proj-kpis">
+              <span class="kpi">응답 40초 → 1초</span>
+              <span class="kpi">배포 10분 → 2분</span>
+              <span class="kpi">쿼리 N+1 → 2회 고정</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2025.01 ~ 현재</span>
+            <span class="proj-tag">고객사 파견</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">공공기관에서 사용하는 업무 통합 웹 서비스로, 게시판을 기반으로 평가 시스템, 외부 데이터 전송, 기관별 통계, 설문조사 등을 통합 제공합니다. 시스템 사용이 확대되면서 성능 저하, 외부 연동 부재, 운영 불안정 문제가 복합적으로 발생했고, 이를 해결하기 위한 고도화 작업을 담당했습니다.</p>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">고도화 배경 및 요구사항</div>
+              <table class="detail-table">
+                <thead><tr><th>요구사항</th><th>배경</th></tr></thead>
+                <tbody>
+                  <tr><td>게시판 데이터 구조 개선</td><td>게시물 조회 시 항목 수만큼 행이 쌓이는 구조로 데이터 증가에 따른 성능 저하 우려</td></tr>
+                  <tr><td>기존 기능 성능 개선</td><td>평가 데이터 조회 등 주요 기능에서 응답 지연 발생</td></tr>
+                  <tr><td>외부 시스템 연동 기능 추가</td><td>타 기관 시스템과의 데이터 교환 요구 증가</td></tr>
+                  <tr><td>배포/운영 안정화</td><td>수동 배포 과정의 반복적 오류로 운영 리스크 발생</td></tr>
+                  <tr><td>신규 기능 개발</td><td>기관 요구에 따른 추가 기능 지속 개발 필요</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">1. 게시판 데이터 구조 개선</div>
+              <div class="problem-block">
+                <div class="block-label">🔴 문제 상황</div>
+                <p class="block-text">기존 게시판은 게시물 하나를 작성하면 게시판 항목(FIELD) 수만큼 행이 생성되는 구조였습니다. <strong>항목이 많을수록 게시물 1건 조회에 읽어야 할 행 수가 선형적으로 증가</strong>했고, 데이터가 쌓일수록 성능이 저하되는 구조적 한계가 있었습니다.</p>
+                <div class="code-block">게시물 1건 조회 시     → 10행 스캔
+게시물 100건 조회 시   → 1,000행 스캔
+게시물 1,000건 조회 시 → 10,000행 스캔 (데이터 증가에 비례해 성능 저하)</div>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 해결 방법</div>
+                <p class="block-text" style="margin-bottom:10px;">TB_POST_FIELD를 <strong>데이터 타입별 4개 테이블로 분리</strong>하고, 컬럼 매핑 정보를 기반으로 어떤 타입 테이블의 몇 번 컬럼을 읽을지 동적으로 결정하는 조회 로직을 구현했습니다.</p>
+                <table class="detail-table">
+                  <thead><tr><th>테이블</th><th>담당 타입</th><th>컬럼 구성</th></tr></thead>
+                  <tbody>
+                    <tr><td>TB_POST_TEXT</td><td>문자열</td><td>TEXT_01 ~ TEXT_50</td></tr>
+                    <tr><td>TB_POST_NUM</td><td>숫자</td><td>NUM_01 ~ NUM_50</td></tr>
+                    <tr><td>TB_POST_DATE</td><td>날짜</td><td>DATE_01 ~ DATE_50</td></tr>
+                    <tr><td>TB_POST_CLOB</td><td>대용량 텍스트</td><td>CLOB_01 ~ CLOB_50</td></tr>
+                  </tbody>
+                </table>
+                <div class="code-block" style="margin-top:10px;">게시물 1건 조회 시     → 타입별 테이블 최대 4행 고정
+게시물 1,000건 조회 시 → 최대 4행 고정 (항목 수 무관)</div>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">2. 프론트엔드 동적 렌더링 개선</div>
+              <p class="overview-text" style="margin-bottom:12px;">TB_BOARD_FIELD에 저장된 항목 정의를 백엔드에서 내려주면, 프론트에서 이를 읽어 <strong>항목 유형에 맞는 UI 요소를 동적으로 생성</strong>하는 구조로 전환했습니다. 기존에는 게시판 항목이 추가되거나 변경될 때마다 개발자가 직접 HTML을 수정해야 했습니다.</p>
+              <div class="flow-block">
+                <p>① 게시판 진입 시 항목 정의 조회 (TB_BOARD_FIELD)</p>
+                <p>② 백엔드에서 항목 목록 + 타입 정보 응답</p>
+                <p>③ 프론트에서 타입별 UI 요소 동적 생성</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ 작성자 → text input</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ 작성일자 → date picker</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ 내용 → textarea</p>
+                <p>&nbsp;&nbsp;&nbsp;└─ 파일첨부 → file upload</p>
+                <p>④ 작성 완료 시 컬럼 매핑 기반으로 타입별 테이블에 저장</p>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">3. 평가 데이터 조회 성능 개선</div>
+              <div class="problem-block">
+                <div class="block-label">🔴 문제 상황</div>
+                <p class="block-text">평가 데이터 조회 시 평균 응답 시간이 <strong>40초 이상</strong> 소요되었습니다. 실행계획 및 로그 분석을 통해 <strong>N+1 쿼리 구조</strong>를 확인했습니다.</p>
+                <div class="code-block">평가 목록 조회 (1회)
+  └─ 각 평가 항목마다 상세 데이터 조회 (N회 반복)
+  → 항목 100개 기준: 쿼리 101회 발생</div>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 해결 방법</div>
+                <ul class="detail-list" style="margin-bottom:10px;">
+                  <li><strong>N+1 구조 제거</strong>: 상세 데이터를 리스트로 일괄 조회 후, Java 반복문으로 매핑하는 방식으로 재설계</li>
+                  <li><strong>인덱스 적용</strong>: 조회 조건으로 빈번하게 사용되는 컬럼에 인덱스 추가</li>
+                  <li><strong>쿼리 구조 개선</strong>: 불필요한 서브쿼리 제거 및 조회 범위 최소화</li>
+                </ul>
+                <div class="code-block">평가 목록 조회 (1회)
+평가 상세 전체 일괄 조회 (1회)
+  └─ Java 반복문으로 매핑 처리
+  → 항목 수와 무관하게 쿼리 2회 고정</div>
+              </div>
+              <div class="result-block">
+                <div class="block-label">✅ 결과</div>
+                <table class="detail-table">
+                  <thead><tr><th>항목</th><th>Before</th><th>After</th><th>개선율</th></tr></thead>
+                  <tbody>
+                    <tr><td>평균 응답 시간</td><td>40초</td><td>1초</td><td><strong>97.5% 단축</strong></td></tr>
+                    <tr><td>쿼리 호출 수</td><td>N+1회</td><td>2회 고정</td><td><strong>구조적 개선</strong></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="detail-label" style="margin-top:22px;">추가 — 평가 총점 계산 로직 개선</div>
+              <div class="problem-block">
+                <div class="block-label">🔴 문제 상황</div>
+                <p class="block-text">Thymeleaf에서 Java 계산식 클래스를 직접 호출해 총점을 계산했습니다. <strong>단일 클래스에서 모든 연도를 처리</strong>해 연도별로 다른 계산식을 적용할 수 없는 한계가 있었습니다.</p>
+                <div class="code-block">Thymeleaf 템플릿
+  └─ @Component 계산식 클래스 직접 호출
+       └─ 단일 클래스에서 모든 연도 처리 (분리 불가)</div>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 해결 방법</div>
+                <p class="block-text" style="margin-bottom:10px;"><strong>백엔드에서 연도 기준으로 계산식 클래스를 분기</strong>하는 구조로 전환, Thymeleaf는 계산 완료된 결과값만 렌더링합니다.</p>
+                <div class="code-block">Java 백엔드
+  ├─ 해당 연도 평가 데이터 조회
+  └─ 연도별 계산식 클래스로 분기
+       ├─ ScoreCalculator2025.java
+       └─ ScoreCalculator2026.java</div>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">4. Jenkins 배포 자동화</div>
+              <div class="problem-block">
+                <div class="block-label">🔴 문제 상황</div>
+                <p class="block-text">4개 운영망에 매번 수동으로 배포하던 과정에서 <strong>반복적인 누락 오류</strong>가 발생하고, 배포 1회에 약 10분이 소요되었습니다.</p>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 해결 방법</div>
+                <p class="block-text" style="margin-bottom:10px;">Jenkins 파이프라인과 쉘 스크립트를 활용해 4개 운영망 배포 프로세스를 자동화했습니다.</p>
+                <table class="detail-table">
+                  <thead><tr><th>단계</th><th>수동 (Before)</th><th>자동 (After)</th></tr></thead>
+                  <tbody>
+                    <tr><td>1</td><td>빌드 수동 실행</td><td>Jenkins 트리거</td></tr>
+                    <tr><td>2</td><td>서버 1 직접 접속 → 파일 복사 → 재시작</td><td>쉘 스크립트로 4개 운영망 자동 순회</td></tr>
+                    <tr><td>3</td><td>서버 2, 3, 4 동일 반복</td><td>각 서버 배포 완료 여부 자동 확인</td></tr>
+                    <tr><td>소요 시간</td><td>약 10분</td><td>약 2분 (80% 단축)</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 프로젝트 2 -->
+      <div class="project-card" id="proj2">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
+        </div>
+        <div class="proj-header" onclick="toggleCard('proj2')">
+          <div class="proj-left">
+            <div class="proj-title">보고서 작성 시스템 개발</div>
+            <div class="proj-stack">Java · Spring Boot · MyBatis · Oracle · JavaScript</div>
+            <div class="proj-kpis">
+              <span class="kpi">협업 기능 신규 개발</span>
+              <span class="kpi">외부 API 연동</span>
+              <span class="kpi">예외 처리 설계</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2024.08 ~ 2024.11</span>
+            <span class="proj-tag">고객사 파견</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">공공기관 업무 시스템에서 사용하는 보고서 작성 시스템에 신규 메뉴를 개발한 프로젝트입니다. 여러 사용자가 동시에 문서를 작성·공유할 수 있는 협업 기능과 보고서 관리 메뉴를 신규 구현했으며, 화면 개발부터 API 연동, DB 쿼리 작성까지 기능 전반을 담당했습니다.</p>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">주요 기여</div>
+              <ul class="detail-list">
+                <li><strong>문서 공유 협업 기능 신규 개발</strong>: 여러 사용자가 동시에 보고서를 작성·공유할 수 있는 기능 설계 및 구현</li>
+                <li><strong>보고서 관리 메뉴 신규 개발</strong>: 보고서 목록 조회, 상세 보기, 상태 관리 등 관리 메뉴 화면 및 백엔드 로직 구현</li>
+                <li><strong>외부 API 연동 및 예외 처리</strong>: 타 기관 시스템과의 API 연동 구현, Timeout·응답 오류 등 유형별 예외 처리 구조 설계</li>
+                <li><strong>기존 기능 수정 및 안정화</strong>: 데이터 전달 구조 개선으로 누락·오류 가능성 감소</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">보고서 공유 흐름</div>
+              <div class="flow-block">
+                <p>① 사용자 보고서 작성 완료</p>
+                <p>② 보고서 데이터 유효성 검증</p>
+                <p>③ 타 기관 내부 시스템 API 호출</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ Timeout → 사용자 안내 메시지 반환</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ 응답 오류 → 오류 유형별 분기 처리</p>
+                <p>&nbsp;&nbsp;&nbsp;└─ 정상 응답 → 공유 완료 처리</p>
+                <p>④ 공유 결과 사용자에게 반환</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 프로젝트 3 -->
+      <div class="project-card" id="proj3">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
+        </div>
+        <div class="proj-header" onclick="toggleCard('proj3')">
+          <div class="proj-left">
+            <div class="proj-title">사내 공통 프레임워크 개발</div>
+            <div class="proj-stack">Java · Spring Boot · MyBatis · MariaDB · JavaScript</div>
+            <div class="proj-kpis">
+              <span class="kpi">Spec 기반 렌더링</span>
+              <span class="kpi">17개 타입 통일</span>
+              <span class="kpi">공통 프레임워크</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2024.05 ~ 현재</span>
+            <span class="proj-tag">사내 프로젝트 · 4인+</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">입사 후 약 3개월간 사내 프레임워크와 공통 코드 구조를 익히며 실무 기반을 다진 뒤, 현재는 각 관리 메뉴의 UI를 <strong>JSON Spec 선언만으로 자동 렌더링하는 공통 프레임워크</strong>를 설계·개발하고 있습니다.</p>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">초기 — 신규 기능 추가 및 공통 유틸 개발</div>
+              <ul class="detail-list">
+                <li>사내 시스템 요구사항에 맞는 신규 기능을 분석·설계·구현, 기존 공통 코드 구조를 파악한 뒤 일관성 있는 방식으로 기능 추가</li>
+                <li>여러 모듈에서 반복적으로 사용되는 로직을 <strong>공통 유틸 함수로 분리·정의</strong>, 중복 코드 제거 및 재사용성 향상</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Spec 기반 UI 렌더링 공통 프레임워크 (진행 중)</div>
+              <div class="problem-block">
+                <div class="block-label">🔴 배경 및 문제</div>
+                <p class="block-text"><strong>각 관리 메뉴마다 HTML + JS 파일이 1:1로 존재</strong>하는 구조였습니다. 메뉴가 추가될 때마다 동일한 패턴의 코드를 반복 작성해야 했고, UI 변경 시 각 파일을 개별적으로 수정해야 하는 유지보수 부담이 있었습니다.</p>
+                <div class="code-block">사용자관리.html + 사용자관리.js → UI 직접 작성
+메뉴관리.html + 메뉴관리.js   → UI 직접 작성
+코드관리.html + 코드관리.js   → UI 직접 작성</div>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 해결 방법</div>
+                <div class="code-block">공통 렌더러 (renderView, renderFields, renderModal ...)
+사용자관리.js → pageSpec 선언만으로 화면 자동 생성
+메뉴관리.js   → pageSpec 선언만으로 화면 자동 생성
+코드관리.js   → pageSpec 선언만으로 화면 자동 생성</div>
+                <ul class="detail-list" style="margin-top:12px;">
+                  <li><strong>fieldRenderer 맵핑 테이블</strong>: text, select, radio, checkbox, tree, datetimepicker 등 17개 타입 렌더링 함수 분리</li>
+                  <li><strong>렌더링 파이프라인 계층 설계</strong>: renderView → renderFields → renderRow → getRenderer 순서로 위임</li>
+                  <li><strong>모달 Spec 기반 구조</strong>: 모달 ID, 필드 구성, 푸터 버튼까지 Spec으로 선언, renderModal로 자동 생성</li>
+                  <li><strong>actions 구조</strong>: Ajax 호출 + 렌더링을 Spec 안에 선언 → onOpen / click / keydown 시점별 자동 실행</li>
+                  <li><span class="inline-code">$.initModalById("groupModal")</span> 한 줄로 렌더 + 데이터 로드 + 이벤트 바인딩 완료</li>
+                </ul>
+              </div>
+              <div class="result-block">
+                <div class="block-label">✅ 기대 효과</div>
+                <table class="detail-table">
+                  <thead><tr><th>항목</th><th>Before</th><th>After</th></tr></thead>
+                  <tbody>
+                    <tr><td>신규 메뉴 추가</td><td>HTML/JS 직접 작성 필요</td><td>Spec 선언만으로 완료</td></tr>
+                    <tr><td>UI 패턴 일관성</td><td>메뉴마다 개별 구현</td><td>공통 렌더러로 통일</td></tr>
+                    <tr><td>모달 재사용</td><td>페이지마다 개별 구현</td><td>key 한 줄로 어디서든 호출</td></tr>
+                    <tr><td>유지보수</td><td>각 파일 개별 수정</td><td>공통 렌더러만 수정</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIDE PROJECT -->
+    <section class="section" id="side">
+      <div class="section-header"><span class="section-icon">🚀</span><span class="section-title">Side Project</span></div>
+
+      <div class="project-card" id="proj-side">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
+        </div>
+        <div class="proj-header" onclick="toggleCard('proj-side')">
+          <div class="proj-left">
+            <div class="proj-title">DOC BRIEF</div>
+            <div class="proj-stack">Java 17 · Spring Boot · JPA · PostgreSQL · Vue 3 · OpenAI · Gemini</div>
+            <div class="proj-kpis">
+              <span class="kpi">LLM Fallback</span>
+              <span class="kpi">ErrorCode 표준화</span>
+              <span class="kpi">AI 파이프라인</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2026.01</span>
+            <span class="proj-tag">팀 프로젝트 · 2인</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">복잡한 문서를 빠르게 이해할 수 있도록 AI 요약과 키워드 하이라이트를 제공하는 문서 요약 웹 서비스입니다. 예외 표준화 및 Rate Limit 대응까지 고려해 설계·구현한 <strong>백엔드 중심 프로젝트</strong>입니다.</p>
+              <div style="display:flex; gap:10px; margin-top:12px;">
+                <a class="side-link" href="https://github.com/dev-yoonddo/docbrief_api" target="_blank">🔎 GitHub →</a>
+                <a class="side-link" href="https://www.notion.so/yoonddo/DOC-BRIEF" target="_blank">💭 기획서 →</a>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Tech Stack</div>
+              <table class="detail-table">
+                <thead><tr><th>분류</th><th>기술</th></tr></thead>
+                <tbody>
+                  <tr><td>Backend</td><td>Java 17, Spring Boot, JPA / Hibernate, PostgreSQL</td></tr>
+                  <tr><td>Frontend</td><td>Vue 3, axios, Session / SessionStorage</td></tr>
+                  <tr><td>LLM API</td><td>OpenAI API, Gemini API</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Basic Info</div>
+              <table class="detail-table">
+                <thead><tr><th>항목</th><th>내용</th></tr></thead>
+                <tbody>
+                  <tr><td>구분</td><td>팀 프로젝트 · 2인</td></tr>
+                  <tr><td>역할</td><td>Developer</td></tr>
+                </tbody>
+              </table>
+              <ul class="detail-list" style="margin-top:12px;">
+                <li>문서 분석 → 요약 → 응답 파이프라인 설계</li>
+                <li>AI 요약 API 및 세션 기반 처리 구조 설계</li>
+                <li>Gemini / OpenAI 다중 LLM 연동 및 Fallback 로직 구현</li>
+                <li>ErrorCode 기반 공통 예외 처리 구조 설계</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Core Features</div>
+              <div class="solution-block" style="margin-bottom:10px;">
+                <div class="block-label" style="color:#0F7B6C;">🤖 AI 요약 시스템</div>
+                <ul class="detail-list">
+                  <li>Gemini / OpenAI 다중 LLM 연동</li>
+                  <li><strong>429 Rate Limit 발생 시 자동 Fallback 처리</strong> — Gemini → OpenAI 자동 전환</li>
+                  <li>AI 요청/응답 예외 유형별 분리 처리</li>
+                </ul>
+              </div>
+              <div class="problem-block" style="margin-bottom:10px;">
+                <div class="block-label" style="color:#E03E3E;">⚠️ 예외 및 오류 처리</div>
+                <ul class="detail-list">
+                  <li><strong>ErrorCode 기반 공통 예외 구조 설계</strong></li>
+                  <li>사용자 노출 메시지와 내부 오류 코드 분리</li>
+                  <li>Rate Limit / Timeout / 요청 실패 등 AI 오류 유형 표준화</li>
+                  <li>프론트엔드 친화적 오류 메시지 전달</li>
+                </ul>
+              </div>
+              <div class="result-block" style="margin-bottom:10px;">
+                <div class="block-label" style="color:#2F6FED;">📄 문서 분석 처리</div>
+                <ul class="detail-list">
+                  <li>파일 업로드 및 URL 입력 기반 문서 분석</li>
+                  <li><strong>문서 파싱 → AI 요약 → 결과 반환 파이프라인</strong> 구성</li>
+                  <li>요약 진행 상태 관리 (ANALYZE / SUMMARY)</li>
+                </ul>
+              </div>
+              <div class="flow-block" style="margin-bottom:10px;">
+                <div class="detail-label" style="margin-bottom:8px;">🗂 요약 보관함 · 하이라이트</div>
+                <ul class="detail-list">
+                  <li>세션 단위 요약 결과 보관 및 선택 다운로드 기능 제공</li>
+                  <li>요약 결과 내 <strong>키워드 자동 추출 및 하이라이트 렌더링</strong></li>
+                  <li>문서 핵심 내용 빠른 파악 지원</li>
+                </ul>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Flow</div>
+              <div class="flow-block">
+                <p>① 파일 업로드 / URL 입력</p>
+                <p>② 문서 파싱 및 텍스트 추출</p>
+                <p>③ LLM API 요약 요청</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ Gemini API 호출</p>
+                <p>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└─ 429 Rate Limit → OpenAI로 자동 Fallback</p>
+                <p>&nbsp;&nbsp;&nbsp;└─ 오류 유형별 분기 처리 (Timeout / 요청 실패 등)</p>
+                <p>④ 요약 결과 반환 + 키워드 추출 및 하이라이트</p>
+                <p>⑤ 세션 단위 보관함 저장 → 선택 다운로드</p>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Screenshots</div>
+              <div class="screenshot-gallery">
+
+                <div class="screenshot-section">
+                  <div class="screenshot-label">메인 화면</div>
+                  <div class="screenshot-grid col-1">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/11693e14-1302-46d1-98d1-def33bd48a2d" alt="메인 화면" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="screenshot-section">
+                  <div class="screenshot-label">파일 업로드 · 요약 진행</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/e6795992-f140-4b7e-8694-c84154b2c05f" alt="파일 업로드 분석 중" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/5430322d-556e-49af-b2bc-63a03b27e3fd" alt="파일 업로드 요약 중" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="screenshot-section">
+                  <div class="screenshot-label">요약 결과 — 파일 / URL</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/17307fa3-ed57-4554-9fd5-700c03387558" alt="파일 요약 결과" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/79072451-5f80-435e-81e7-4ee9919cdf40" alt="URL 요약 결과" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="screenshot-section">
+                  <div class="screenshot-label">요약 보관함</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/4e1cb65f-a920-4f1e-8c5a-dce7f32cd1f8" alt="요약 보관함" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/ff9d70ce-957c-434e-9111-0df215616d16" alt="요약 보관함 선택" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="screenshot-section">
+                  <div class="screenshot-label">다운로드</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/a8808fef-d2a9-474a-9265-82a3cdf1c2db" alt="다운로드" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/9cb12e8b-1f6d-44ff-9ca4-c9d9b281ce91" alt="다운로드 결과" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="screenshot-section">
+                  <div class="screenshot-label">Flow Chart</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/a014db15-6728-4b5a-8102-1404e29dd9f9" alt="문서 요약 Flow" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="https://github.com/user-attachments/assets/d11914f9-5c86-4111-9375-65722e715cb6" alt="문서 파싱 Flow" />
+                      <div class="screenshot-zoom-hint">
+                        <div class="screenshot-zoom-btn">
+                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                          크게 보기
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="section-header"><span class="section-icon">✉️</span><span class="section-title">Contact</span></div>
+      <div class="contact-grid">
+        <div class="contact-item"><div class="contact-icon">📧</div><div><span class="contact-label">Email</span><span class="contact-val">oooo_0720@naver.com</span></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div><span class="contact-label">Phone</span><span class="contact-val">010-2941-9228</span></div></div>
+        <div class="contact-item"><div class="contact-icon">🐙</div><div><span class="contact-label">GitHub</span><span class="contact-val">github.com/dev-yoonddo</span></div></div>
+        <div class="contact-item"><div class="contact-icon">✍️</div><div><span class="contact-label">Blog</span><span class="contact-val">velog.io/@yoonddo</span></div></div>
+      </div>
+    </section>
+
+    <footer class="footer">© 2026 Jeong Yoon-Seo · Built with GitHub Pages</footer>
+  </main>
+</div>
+
+<!-- IMAGE MODAL -->
+<div class="img-modal-overlay" id="imgModal" onclick="closeImgModal(event)">
+  <div class="img-modal-box">
+    <button class="img-modal-close" onclick="closeImgModalBtn()">✕</button>
+    <img id="imgModalSrc" src="" alt="" />
+    <div class="img-modal-caption" id="imgModalCaption"></div>
+  </div>
+</div>
+
+<script>
+function toggleCard(id) {
+  document.getElementById(id).classList.toggle('open');
+}
+
+/* IMAGE MODAL */
+function openImgModal(src, alt) {
+  const modal = document.getElementById('imgModal');
+  document.getElementById('imgModalSrc').src = src;
+  document.getElementById('imgModalCaption').textContent = alt;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeImgModalBtn() {
+  document.getElementById('imgModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeImgModal(e) {
+  if (e.target === document.getElementById('imgModal')) closeImgModalBtn();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeImgModalBtn(); });
+
+/* 갤러리 이미지 클릭 이벤트 — screenshot-wrap 기준으로 모두 잡기 */
+window.addEventListener('load', () => {
+  document.querySelectorAll('.screenshot-wrap').forEach(wrap => {
+    const img = wrap.querySelector('.screenshot-img');
+    if (img) {
+      wrap.addEventListener('click', () => openImgModal(img.src, img.alt));
+    }
+  });
+});
+
+/* section fade-in */
+const sections = document.querySelectorAll('.section');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); fadeObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+sections.forEach(s => fadeObserver.observe(s));
+
+/* nav active highlight */
+const navItems = document.querySelectorAll('.nav-item');
+let isUserClicking = false;
+let scrollEndTimer = null;
+
+function setActive(href) {
+  navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === href));
+}
+
+document.querySelectorAll('.nav-item').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (!href || !href.startsWith('#')) return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    setActive(href);
+    isUserClicking = true;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    clearTimeout(scrollEndTimer);
+    scrollEndTimer = setTimeout(() => { isUserClicking = false; }, 1000);
+  });
+});
+
+const navObserver = new IntersectionObserver((entries) => {
+  if (isUserClicking) return;
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      setActive('#' + entry.target.id);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
+</script>
+</body>
+</html>
