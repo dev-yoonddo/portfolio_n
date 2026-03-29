@@ -35,10 +35,12 @@ a { color: inherit; text-decoration: none; }
 
 .layout { display: flex; min-height: 100vh; }
 
+/* ── SIDEBAR ── */
 .sidebar {
   width: var(--side); flex-shrink: 0; position: fixed; top: 0; left: 0;
   height: 100vh; padding: 40px 20px 40px 28px; border-right: 1px solid var(--border);
   display: flex; flex-direction: column; background: var(--bg); z-index: 100; overflow-y: auto;
+  transition: transform 0.3s ease;
 }
 .sidebar-name { font-size: 14px; font-weight: 700; margin-bottom: 2px; letter-spacing: -0.3px; }
 .sidebar-role { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-bottom: 28px; }
@@ -51,18 +53,61 @@ a { color: inherit; text-decoration: none; }
 .sidebar-link { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text3); padding: 4px 0; transition: color 0.15s; }
 .sidebar-link:hover { color: var(--text); }
 
+/* ── HAMBURGER & MOBILE NAV ── */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 200;
+  width: 40px;
+  height: 40px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hamburger:hover { background: var(--bg2); }
+.hamburger span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+/* X 애니메이션 */
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* 모바일 딤 오버레이 */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.nav-overlay.open { opacity: 1; }
+
+/* ── MAIN ── */
 .main { margin-left: var(--side); flex: 1; max-width: 900px; padding: 80px 72px 120px 72px; }
 
 /* HERO */
 .hero { padding-bottom: 56px; border-bottom: 1px solid var(--border); margin-bottom: 64px; }
-.hero-emoji { font-size: 52px; line-height: 1; margin-bottom: 20px; display: block; animation: wave 2.5s ease-in-out infinite; transform-origin: 70% 70%; width: fit-content; }
-@keyframes wave { 0%,60%,100%{transform:rotate(0deg)} 10%,30%{transform:rotate(14deg)} 20%{transform:rotate(-8deg)} 40%{transform:rotate(-4deg)} 50%{transform:rotate(10deg)} }
 .hero-name { font-size: 42px; font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 6px; }
 .hero-name span { color: var(--accent); }
 .hero-sub { font-size: 16px; color: var(--text2); font-family: var(--mono); margin-bottom: 24px; }
 .hero-desc { font-size: 16.5px; color: var(--text2); line-height: 1.85; max-width: 580px; }
 .hero-desc strong { color: var(--text); font-weight: 700; }
-.hero-quote { margin-top: 18px; font-size: 14px; color: var(--text3); font-style: italic; padding-left: 14px; border-left: 2px solid var(--border); line-height: 1.7; }
 .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
 .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-family: var(--mono); background: var(--bg2); border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; color: var(--text2); font-weight: 500; }
 .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; flex-shrink: 0; }
@@ -105,67 +150,33 @@ a { color: inherit; text-decoration: none; }
   transition: box-shadow 0.22s, border-color 0.22s;
   position: relative;
 }
-.project-card:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  border-color: #D0D0CE;
-}
+.project-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-color: #D0D0CE; }
 
 .proj-hover-overlay {
-  position: absolute;
-  inset: 0;
-  border-radius: 10px;
+  position: absolute; inset: 0; border-radius: 10px;
   background: rgba(245, 245, 243, 0.82);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.22s ease;
-  z-index: 10;
+  backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.22s ease; z-index: 10;
 }
-.project-card:not(.open):hover .proj-hover-overlay {
-  opacity: 1;
-  pointer-events: none;
-}
-.project-card.open .proj-hover-overlay {
-  display: none;
-}
+.project-card:not(.open):hover .proj-hover-overlay { opacity: 1; pointer-events: none; }
+.project-card.open .proj-hover-overlay { display: none; }
 
 .proj-overlay-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 24px;
-  background: var(--text);
-  color: #fff;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 700;
-  font-family: var(--mono);
-  letter-spacing: 0.3px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 11px 24px; background: var(--text); color: #fff;
+  border-radius: 8px; font-size: 13px; font-weight: 700; font-family: var(--mono);
   box-shadow: 0 4px 16px rgba(0,0,0,0.14);
-  transform: scale(0.96);
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-  pointer-events: none;
-  user-select: none;
+  transform: scale(0.96); transition: transform 0.22s ease, box-shadow 0.22s ease;
+  pointer-events: none; user-select: none;
 }
-.project-card:not(.open):hover .proj-overlay-btn {
-  transform: scale(1);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.18);
-}
+.project-card:not(.open):hover .proj-overlay-btn { transform: scale(1); box-shadow: 0 6px 24px rgba(0,0,0,0.18); }
 .proj-overlay-btn svg { flex-shrink: 0; opacity: 0.9; }
 
 .proj-header {
-  padding: 22px 26px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  user-select: none;
-  transition: background 0.15s;
+  padding: 22px 26px; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 12px; user-select: none; transition: background 0.15s;
 }
 .proj-header:hover { background: var(--bg2); }
 .proj-left { flex: 1; }
@@ -178,17 +189,10 @@ a { color: inherit; text-decoration: none; }
 .proj-tag { font-size: 11px; font-weight: 700; color: var(--accent); font-family: var(--mono); }
 
 .proj-toggle-icon {
-  margin-top: 8px;
-  width: 24px;
-  height: 24px;
-  border-radius: 5px;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, transform 0.25s;
-  flex-shrink: 0;
+  margin-top: 8px; width: 24px; height: 24px; border-radius: 5px;
+  background: var(--bg2); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, transform 0.25s; flex-shrink: 0;
 }
 .project-card.open .proj-toggle-icon { transform: rotate(180deg); background: var(--bg3); }
 
@@ -230,15 +234,9 @@ a { color: inherit; text-decoration: none; }
 
 .inline-code { background: var(--bg3); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); font-size: 12px; }
 
-/* SIDE */
-.side-card { border: 1px solid var(--border); border-radius: 10px; padding: 24px 26px; transition: box-shadow 0.2s, border-color 0.2s; }
-.side-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-color: #D0D0CE; }
-.side-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-.side-title { font-size: 16px; font-weight: 800; letter-spacing: -0.3px; }
-.side-links { display: flex; gap: 10px; }
+/* SIDE LINKS */
 .side-link { font-size: 12px; font-family: var(--mono); color: var(--accent); padding: 3px 9px; border: 1px solid var(--accent-bg); border-radius: 4px; background: var(--accent-bg); transition: background 0.15s; }
 .side-link:hover { background: #dde8fb; }
-.side-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); margin-bottom: 14px; }
 
 /* CONTACT */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -252,29 +250,12 @@ a { color: inherit; text-decoration: none; }
 .hero-inner { display: flex; align-items: flex-start; gap: 48px; }
 .hero-text  { flex: 1; min-width: 0; }
 .hero-photo {
-  flex-shrink: 0;
-  width: 220px;
-  height: 220px;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  margin-top: 6px;
+  flex-shrink: 0; width: 220px; height: 220px; border-radius: 16px;
+  overflow: hidden; border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-top: 6px;
 }
-.hero-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
-  transition: transform 0.4s ease;
-}
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform 0.4s ease; }
 .hero-photo:hover img { transform: scale(1.04); }
-
-@media (max-width: 768px) {
-  .hero-inner { flex-direction: column-reverse; gap: 24px; }
-  .hero-photo { width: 100px; height: 100px; border-radius: 12px; margin-top: 0; }
-}
 
 /* SCREENSHOT GALLERY */
 .screenshot-gallery { margin-top: 28px; }
@@ -284,81 +265,36 @@ a { color: inherit; text-decoration: none; }
 .screenshot-grid.col-1 { grid-template-columns: 1fr; }
 .screenshot-grid.col-2 { grid-template-columns: 1fr 1fr; }
 
-/* screenshot-wrap: 모든 img를 감싸는 공통 래퍼 */
-.screenshot-wrap {
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  cursor: zoom-in;
-  display: block;
-}
-.screenshot-img {
-  width: 100%;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  display: block;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
-}
-.screenshot-wrap:hover .screenshot-img {
-  transform: scale(1.02);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-  filter: brightness(0.88);
-}
+.screenshot-wrap { position: relative; border-radius: 8px; overflow: hidden; cursor: zoom-in; display: block; }
+.screenshot-img { width: 100%; border-radius: 8px; border: 1px solid var(--border); display: block; transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; }
+.screenshot-wrap:hover .screenshot-img { transform: scale(1.02); box-shadow: 0 8px 32px rgba(0,0,0,0.13); filter: brightness(0.88); }
 
-/* 호버 힌트 오버레이 */
-.screenshot-zoom-hint {
-  position: absolute;
-  inset: 0;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.22s ease;
-  pointer-events: none;
-}
+.screenshot-zoom-hint { position: absolute; inset: 0; border-radius: 8px; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.22s ease; pointer-events: none; }
 .screenshot-wrap:hover .screenshot-zoom-hint { opacity: 1; }
-
 .screenshot-zoom-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 9px 20px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(0,0,0,0.08);
-  border-radius: 24px;
-  font-size: 12px;
-  font-weight: 700;
-  font-family: var(--mono);
-  color: var(--text);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 9px 20px; background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.08); border-radius: 24px;
+  font-size: 12px; font-weight: 700; font-family: var(--mono); color: var(--text);
   box-shadow: 0 4px 20px rgba(0,0,0,0.14);
-  letter-spacing: 0.2px;
-  transform: scale(0.92) translateY(4px);
-  transition: transform 0.22s ease;
-  pointer-events: none;
-  user-select: none;
+  transform: scale(0.92) translateY(4px); transition: transform 0.22s ease;
+  pointer-events: none; user-select: none;
 }
-.screenshot-wrap:hover .screenshot-zoom-btn {
-  transform: scale(1) translateY(0);
-}
+.screenshot-wrap:hover .screenshot-zoom-btn { transform: scale(1) translateY(0); }
 
 /* IMAGE MODAL */
 .img-modal-overlay {
   position: fixed; inset: 0; z-index: 1000;
-  background: rgba(0,0,0,0.78);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.22s ease;
+  opacity: 0; pointer-events: none; transition: opacity 0.22s ease;
 }
 .img-modal-overlay.open { opacity: 1; pointer-events: all; }
 .img-modal-box {
   position: relative; max-width: 90vw; max-height: 88vh;
   border-radius: 12px; overflow: hidden;
   box-shadow: 0 32px 80px rgba(0,0,0,0.5);
-  transform: scale(0.94) translateY(10px);
-  transition: transform 0.25s ease;
+  transform: scale(0.94) translateY(10px); transition: transform 0.25s ease;
 }
 .img-modal-overlay.open .img-modal-box { transform: scale(1) translateY(0); }
 .img-modal-box img { display: block; max-width: 90vw; max-height: 88vh; object-fit: contain; }
@@ -368,34 +304,71 @@ a { color: inherit; text-decoration: none; }
   background: rgba(0,0,0,0.55); color: #fff;
   border: none; cursor: pointer; font-size: 18px; line-height: 1;
   display: flex; align-items: center; justify-content: center;
-  transition: background 0.15s, transform 0.15s;
-  z-index: 2;
+  transition: background 0.15s, transform 0.15s; z-index: 2;
 }
 .img-modal-close:hover { background: rgba(0,0,0,0.85); transform: scale(1.1); }
 .img-modal-caption {
   position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 10px 16px;
-  background: rgba(0,0,0,0.48);
-  color: #fff; font-size: 12px; font-family: var(--mono);
-  text-align: center;
+  padding: 10px 16px; background: rgba(0,0,0,0.48);
+  color: #fff; font-size: 12px; font-family: var(--mono); text-align: center;
 }
 
 .footer { margin-top: 80px; padding-top: 28px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); font-family: var(--mono); }
 
+/* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  .sidebar { display: none; }
-  .main { margin-left: 0; padding: 48px 24px 80px; }
+  /* 사이드바: 기본적으로 왼쪽으로 숨김 */
+  .sidebar {
+    transform: translateX(-100%);
+    width: 220px;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.10);
+  }
+  /* 열린 상태 */
+  .sidebar.open { transform: translateX(0); }
+
+  /* 햄버거 버튼 표시 */
+  .hamburger { display: flex; }
+
+  /* 딤 오버레이 표시 */
+  .nav-overlay { display: block; pointer-events: none; }
+  .nav-overlay.open { pointer-events: all; }
+
+  .main { margin-left: 0; padding: 64px 20px 80px; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
-  .hero-name { font-size: 32px; }
+  .hero-name { font-size: 28px; letter-spacing: -1.2px; }
+  .hero-inner { flex-direction: column-reverse; gap: 20px; }
+  .hero-photo { width: 88px; height: 88px; border-radius: 12px; margin-top: 0; }
   .screenshot-grid.col-2 { grid-template-columns: 1fr; }
+  .proj-header { padding: 16px 16px; }
+  .proj-detail-inner { padding: 20px 16px; }
+  .detail-table { font-size: 12px; }
+  .detail-table th, .detail-table td { padding: 6px 8px; }
+}
+
+@media (max-width: 480px) {
+  .main { padding: 64px 16px 80px; }
+  .hero-name { font-size: 24px; }
+  .stat-grid { grid-template-columns: 1fr; }
+  .proj-kpis { gap: 5px; }
+  .kpi { font-size: 11px; padding: 2px 8px; }
 }
 </style>
 </head>
 <body>
 <div class="layout">
 
-  <aside class="sidebar">
+  <!-- 햄버거 버튼 -->
+  <button class="hamburger" id="hamburgerBtn" aria-label="메뉴 열기">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- 모바일 딤 오버레이 -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-name">정윤서</div>
     <div class="sidebar-role">Developer</div>
     <nav class="nav">
@@ -476,7 +449,6 @@ a { color: inherit; text-decoration: none; }
     <section class="section" id="career">
       <div class="section-header"><span class="section-icon">💼</span><span class="section-title">Career</span></div>
 
-      <!-- 프로젝트 1 -->
       <div class="project-card" id="proj1">
         <div class="proj-hover-overlay" aria-hidden="true">
           <div class="proj-overlay-btn">
@@ -548,7 +520,7 @@ a { color: inherit; text-decoration: none; }
             </div>
             <div class="detail-block">
               <div class="detail-label">2. 프론트엔드 동적 렌더링 개선</div>
-              <p class="overview-text" style="margin-bottom:12px;">TB_BOARD_FIELD에 저장된 항목 정의를 백엔드에서 내려주면, 프론트에서 이를 읽어 <strong>항목 유형에 맞는 UI 요소를 동적으로 생성</strong>하는 구조로 전환했습니다. 기존에는 게시판 항목이 추가되거나 변경될 때마다 개발자가 직접 HTML을 수정해야 했습니다.</p>
+              <p class="overview-text" style="margin-bottom:12px;">TB_BOARD_FIELD에 저장된 항목 정의를 백엔드에서 내려주면, 프론트에서 이를 읽어 <strong>항목 유형에 맞는 UI 요소를 동적으로 생성</strong>하는 구조로 전환했습니다.</p>
               <div class="flow-block">
                 <p>① 게시판 진입 시 항목 정의 조회 (TB_BOARD_FIELD)</p>
                 <p>② 백엔드에서 항목 목록 + 타입 정보 응답</p>
@@ -564,7 +536,7 @@ a { color: inherit; text-decoration: none; }
               <div class="detail-label">3. 평가 데이터 조회 성능 개선</div>
               <div class="problem-block">
                 <div class="block-label">🔴 문제 상황</div>
-                <p class="block-text">평가 데이터 조회 시 평균 응답 시간이 <strong>40초 이상</strong> 소요되었습니다. 실행계획 및 로그 분석을 통해 <strong>N+1 쿼리 구조</strong>를 확인했습니다.</p>
+                <p class="block-text">평가 데이터 조회 시 평균 응답 시간이 <strong>40초 이상</strong> 소요되었습니다. N+1 쿼리 구조가 원인이었습니다.</p>
                 <div class="code-block">평가 목록 조회 (1회)
   └─ 각 평가 항목마다 상세 데이터 조회 (N회 반복)
   → 항목 100개 기준: 쿼리 101회 발생</div>
@@ -572,7 +544,7 @@ a { color: inherit; text-decoration: none; }
               <div class="solution-block">
                 <div class="block-label">🟢 해결 방법</div>
                 <ul class="detail-list" style="margin-bottom:10px;">
-                  <li><strong>N+1 구조 제거</strong>: 상세 데이터를 리스트로 일괄 조회 후, Java 반복문으로 매핑하는 방식으로 재설계</li>
+                  <li><strong>N+1 구조 제거</strong>: 상세 데이터를 리스트로 일괄 조회 후 Java 반복문으로 매핑</li>
                   <li><strong>인덱스 적용</strong>: 조회 조건으로 빈번하게 사용되는 컬럼에 인덱스 추가</li>
                   <li><strong>쿼리 구조 개선</strong>: 불필요한 서브쿼리 제거 및 조회 범위 최소화</li>
                 </ul>
@@ -594,14 +566,14 @@ a { color: inherit; text-decoration: none; }
               <div class="detail-label" style="margin-top:22px;">추가 — 평가 총점 계산 로직 개선</div>
               <div class="problem-block">
                 <div class="block-label">🔴 문제 상황</div>
-                <p class="block-text">Thymeleaf에서 Java 계산식 클래스를 직접 호출해 총점을 계산했습니다. <strong>단일 클래스에서 모든 연도를 처리</strong>해 연도별로 다른 계산식을 적용할 수 없는 한계가 있었습니다.</p>
+                <p class="block-text">Thymeleaf에서 Java 계산식 클래스를 직접 호출해 총점을 계산. <strong>단일 클래스에서 모든 연도를 처리</strong>해 연도별로 다른 계산식을 적용할 수 없는 한계가 있었습니다.</p>
                 <div class="code-block">Thymeleaf 템플릿
   └─ @Component 계산식 클래스 직접 호출
        └─ 단일 클래스에서 모든 연도 처리 (분리 불가)</div>
               </div>
               <div class="solution-block">
                 <div class="block-label">🟢 해결 방법</div>
-                <p class="block-text" style="margin-bottom:10px;"><strong>백엔드에서 연도 기준으로 계산식 클래스를 분기</strong>하는 구조로 전환, Thymeleaf는 계산 완료된 결과값만 렌더링합니다.</p>
+                <p class="block-text" style="margin-bottom:10px;"><strong>백엔드에서 연도 기준으로 계산식 클래스를 분기</strong>하는 구조로 전환.</p>
                 <div class="code-block">Java 백엔드
   ├─ 해당 연도 평가 데이터 조회
   └─ 연도별 계산식 클래스로 분기
@@ -633,7 +605,6 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
 
-      <!-- 프로젝트 2 -->
       <div class="project-card" id="proj2">
         <div class="proj-hover-overlay" aria-hidden="true">
           <div class="proj-overlay-btn">
@@ -690,7 +661,6 @@ a { color: inherit; text-decoration: none; }
         </div>
       </div>
 
-      <!-- 프로젝트 3 -->
       <div class="project-card" id="proj3">
         <div class="proj-hover-overlay" aria-hidden="true">
           <div class="proj-overlay-btn">
@@ -888,142 +858,50 @@ a { color: inherit; text-decoration: none; }
             <div class="detail-block">
               <div class="detail-label">Screenshots</div>
               <div class="screenshot-gallery">
-
                 <div class="screenshot-section">
                   <div class="screenshot-label">메인 화면</div>
                   <div class="screenshot-grid col-1">
                     <div class="screenshot-wrap">
                       <img class="screenshot-img" src="./images/메인화면.png" alt="메인 화면" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
+                      <div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div>
                     </div>
                   </div>
                 </div>
-
                 <div class="screenshot-section">
                   <div class="screenshot-label">파일 업로드 · 요약 진행</div>
                   <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약_FILE.png" alt="파일 업로드 분석 중" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약_FILE2.png" alt="파일 업로드 요약 중" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약_FILE.png" alt="파일 업로드 분석 중" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약_FILE2.png" alt="파일 업로드 요약 중" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
                   </div>
                 </div>
-
                 <div class="screenshot-section">
                   <div class="screenshot-label">요약 결과 — 파일 / URL</div>
                   <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약결과_FILE.png" alt="파일 요약 결과" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약결과_URL.png" alt="URL 요약 결과" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약결과_FILE.png" alt="파일 요약 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약결과_URL.png" alt="URL 요약 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
                   </div>
                 </div>
-
                 <div class="screenshot-section">
                   <div class="screenshot-label">요약 보관함</div>
                   <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약보관함_1.png" alt="요약 보관함" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약보관함_2.png" alt="요약 보관함 선택" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_1.png" alt="요약 보관함" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_2.png" alt="요약 보관함 선택" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
                   </div>
                 </div>
-
                 <div class="screenshot-section">
                   <div class="screenshot-label">다운로드</div>
                   <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약보관함_3.png" alt="다운로드" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/요약보관함_4.png" alt="다운로드 결과" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_3.png" alt="다운로드" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_4.png" alt="다운로드 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
                   </div>
                 </div>
-
                 <div class="screenshot-section">
                   <div class="screenshot-label">Flow Chart</div>
                   <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/문서요약 Flow.png" alt="문서 요약 Flow" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/문서파싱 Flow.png" alt="문서 파싱 Flow" />
-                      <div class="screenshot-zoom-hint">
-                        <div class="screenshot-zoom-btn">
-                          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                          크게 보기
-                        </div>
-                      </div>
-                    </div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/문서요약 Flow.png" alt="문서 요약 Flow" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/문서파싱 Flow.png" alt="문서 파싱 Flow" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
                   </div>
                 </div>
-
               </div>
             </div>
           </div>
@@ -1056,16 +934,49 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <script>
+/* ── 햄버거 메뉴 ── */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const sidebar      = document.getElementById('sidebar');
+const navOverlay   = document.getElementById('navOverlay');
+
+function openNav() {
+  sidebar.classList.add('open');
+  navOverlay.classList.add('open');
+  hamburgerBtn.classList.add('open');
+  hamburgerBtn.setAttribute('aria-label', '메뉴 닫기');
+  document.body.style.overflow = 'hidden';
+}
+function closeNav() {
+  sidebar.classList.remove('open');
+  navOverlay.classList.remove('open');
+  hamburgerBtn.classList.remove('open');
+  hamburgerBtn.setAttribute('aria-label', '메뉴 열기');
+  document.body.style.overflow = '';
+}
+function toggleNav() {
+  sidebar.classList.contains('open') ? closeNav() : openNav();
+}
+
+hamburgerBtn.addEventListener('click', toggleNav);
+navOverlay.addEventListener('click', closeNav);
+
+/* 모바일에서 nav 항목 클릭 시 메뉴 닫기 */
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    if (window.innerWidth <= 768) closeNav();
+  });
+});
+
+/* ── 카드 토글 ── */
 function toggleCard(id) {
   document.getElementById(id).classList.toggle('open');
 }
 
-/* IMAGE MODAL */
+/* ── 이미지 모달 ── */
 function openImgModal(src, alt) {
-  const modal = document.getElementById('imgModal');
   document.getElementById('imgModalSrc').src = src;
   document.getElementById('imgModalCaption').textContent = alt;
-  modal.classList.add('open');
+  document.getElementById('imgModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
 function closeImgModalBtn() {
@@ -1075,28 +986,24 @@ function closeImgModalBtn() {
 function closeImgModal(e) {
   if (e.target === document.getElementById('imgModal')) closeImgModalBtn();
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeImgModalBtn(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeImgModalBtn(); closeNav(); } });
 
-/* 갤러리 이미지 클릭 이벤트 — screenshot-wrap 기준으로 모두 잡기 */
 window.addEventListener('load', () => {
   document.querySelectorAll('.screenshot-wrap').forEach(wrap => {
     const img = wrap.querySelector('.screenshot-img');
-    if (img) {
-      wrap.addEventListener('click', () => openImgModal(img.src, img.alt));
-    }
+    if (img) wrap.addEventListener('click', () => openImgModal(img.src, img.alt));
   });
 });
 
-/* section fade-in */
-const sections = document.querySelectorAll('.section');
+/* ── section fade-in ── */
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('visible'); fadeObserver.unobserve(e.target); }
   });
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-sections.forEach(s => fadeObserver.observe(s));
+document.querySelectorAll('.section').forEach(s => fadeObserver.observe(s));
 
-/* nav active highlight */
+/* ── nav active highlight ── */
 const navItems = document.querySelectorAll('.nav-item');
 let isUserClicking = false;
 let scrollEndTimer = null;
@@ -1105,7 +1012,7 @@ function setActive(href) {
   navItems.forEach(n => n.classList.toggle('active', n.getAttribute('href') === href));
 }
 
-document.querySelectorAll('.nav-item').forEach(link => {
+navItems.forEach(link => {
   link.addEventListener('click', function(e) {
     const href = this.getAttribute('href');
     if (!href || !href.startsWith('#')) return;
@@ -1123,9 +1030,7 @@ document.querySelectorAll('.nav-item').forEach(link => {
 const navObserver = new IntersectionObserver((entries) => {
   if (isUserClicking) return;
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      setActive('#' + entry.target.id);
-    }
+    if (entry.isIntersecting) setActive('#' + entry.target.id);
   });
 }, { threshold: 0.4 });
 document.querySelectorAll('section[id]').forEach(s => navObserver.observe(s));
