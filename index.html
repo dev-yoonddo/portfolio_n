@@ -81,12 +81,10 @@ a { color: inherit; text-decoration: none; }
   border-radius: 2px;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
-/* X 애니메이션 */
 .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-/* 모바일 딤 오버레이 */
 .nav-overlay {
   display: none;
   position: fixed;
@@ -317,22 +315,15 @@ a { color: inherit; text-decoration: none; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
-  /* 사이드바: 기본적으로 왼쪽으로 숨김 */
   .sidebar {
     transform: translateX(-100%);
     width: 220px;
     box-shadow: 4px 0 24px rgba(0,0,0,0.10);
   }
-  /* 열린 상태 */
   .sidebar.open { transform: translateX(0); }
-
-  /* 햄버거 버튼 표시 */
   .hamburger { display: flex; }
-
-  /* 딤 오버레이 표시 */
   .nav-overlay { display: block; pointer-events: none; }
   .nav-overlay.open { pointer-events: all; }
-
   .main { margin-left: 0; padding: 64px 20px 80px; }
   .stat-grid { grid-template-columns: 1fr 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
@@ -374,8 +365,8 @@ a { color: inherit; text-decoration: none; }
     <nav class="nav">
       <a class="nav-item active" href="#about"><span class="nav-dot"></span> About Me</a>
       <a class="nav-item" href="#skills"><span class="nav-dot"></span> Skills</a>
-      <a class="nav-item" href="#career"><span class="nav-dot"></span> Career</a>
       <a class="nav-item" href="#side"><span class="nav-dot"></span> Side Project</a>
+      <a class="nav-item" href="#career"><span class="nav-dot"></span> Career</a>
       <a class="nav-item" href="#contact"><span class="nav-dot"></span> Contact</a>
     </nav>
     <div class="sidebar-bottom">
@@ -436,29 +427,195 @@ a { color: inherit; text-decoration: none; }
         <div class="skill-chips">
           <span class="chip chip-secondary">Java</span>
           <span class="chip chip-secondary">Spring Boot</span>
-          <span class="chip chip-secondary">MyBatis</span>
           <span class="chip chip-secondary">JPA</span>
-          <span class="chip chip-secondary">Oracle</span>
+          <span class="chip chip-secondary">MyBatis</span>
+          <span class="chip chip-secondary">Vue.js</span>
+          <span class="chip chip-secondary">JavaScript</span>
+          <span class="chip chip-secondary">AWS EC2/RDS</span>
+          <span class="chip chip-secondary">PostgreSQL</span>
           <span class="chip chip-secondary">MySQL</span>
           <span class="chip chip-secondary">MariaDB</span>
-          <span class="chip chip-secondary">PostgreSQL</span>
-          <span class="chip chip-secondary">AWS EC2/RDS</span>
-          <span class="chip chip-secondary">Thymeleaf</span>
-          <span class="chip chip-secondary">JavaScript</span>
-          <span class="chip chip-secondary">jQuery</span>
+          <span class="chip chip-secondary">Oracle</span>
           <span class="chip chip-secondary">Jenkins</span>
           <span class="chip chip-secondary">GitLab</span>
           <span class="chip chip-secondary">Linux</span>
+          <span class="chip chip-secondary">Thymeleaf</span>
+          <span class="chip chip-secondary">jQuery</span>
           <span class="chip chip-secondary">Tomcat / WebLogic</span>
-          <span class="chip chip-secondary">Vue.js</span>
         </div>
       </div>
-      <!--<div class="skill-group">
-        <div class="skill-group-label">학습 중</div>
-        <div class="skill-chips">
-          <span class="chip chip-learning">JPA (CRUD · 연관관계 매핑)</span><span class="chip chip-learning">Vue.js (화면 구성 · API 연동)</span>
+    </section>
+
+    <!-- ✅ SIDE PROJECT (Career 앞으로 이동) -->
+    <section class="section" id="side">
+      <div class="section-header"><span class="section-icon">🚀</span><span class="section-title">Side Project</span></div>
+
+      <!-- DOC BRIEF -->
+      <div class="project-card" id="proj-side">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
         </div>
-      </div>-->
+        <div class="proj-header" onclick="toggleCard('proj-side')">
+          <div class="proj-left">
+            <div class="proj-title">DOC BRIEF</div>
+            <div class="proj-stack">Java 17 · Spring Boot · JPA · PostgreSQL · Vue 3 · OpenAI · Gemini</div>
+            <div class="proj-kpis">
+              <span class="kpi">LLM Fallback</span>
+              <span class="kpi">ErrorCode 표준화</span>
+              <span class="kpi">AI 파이프라인</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2026.01</span>
+            <span class="proj-tag">팀 프로젝트 · 2인</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">복잡한 문서를 빠르게 이해할 수 있도록 AI 요약과 키워드 하이라이트를 제공하는 문서 요약 웹 서비스입니다. 예외 표준화 및 Rate Limit 대응까지 고려해 설계·구현한 <strong>백엔드 중심 프로젝트</strong>입니다.</p>
+              <div style="display:flex; gap:10px; margin-top:12px;">
+                <a class="side-link" href="https://github.com/dev-yoonddo/docbrief_api" target="_blank">🔎 GitHub →</a>
+                <a class="side-link" href="https://www.notion.so/yoonddo/DOC-BRIEF" target="_blank">💭 기획서 →</a>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Tech Stack</div>
+              <table class="detail-table">
+                <thead><tr><th>분류</th><th>기술</th></tr></thead>
+                <tbody>
+                  <tr><td>Backend</td><td>Java 17, Spring Boot, JPA / Hibernate, PostgreSQL</td></tr>
+                  <tr><td>Frontend</td><td>Vue 3, axios, Session / SessionStorage</td></tr>
+                  <tr><td>LLM API</td><td>OpenAI API, Gemini API</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Basic Info</div>
+              <table class="detail-table">
+                <thead><tr><th>항목</th><th>내용</th></tr></thead>
+                <tbody>
+                  <tr><td>구분</td><td>팀 프로젝트 · 2인</td></tr>
+                  <tr><td>역할</td><td>Developer</td></tr>
+                </tbody>
+              </table>
+              <ul class="detail-list" style="margin-top:12px;">
+                <li>문서 분석 → 요약 → 응답 파이프라인 설계</li>
+                <li>AI 요약 API 및 세션 기반 처리 구조 설계</li>
+                <li>Gemini / OpenAI 다중 LLM 연동 및 Fallback 로직 구현</li>
+                <li>ErrorCode 기반 공통 예외 처리 구조 설계</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Core Features</div>
+              <div class="solution-block" style="margin-bottom:10px;">
+                <div class="block-label" style="color:#0F7B6C;">🤖 AI 요약 시스템</div>
+                <ul class="detail-list">
+                  <li>Gemini / OpenAI 다중 LLM 연동</li>
+                  <li><strong>429 Rate Limit 발생 시 자동 Fallback 처리</strong> — Gemini → OpenAI 자동 전환</li>
+                  <li>AI 요청/응답 예외 유형별 분리 처리</li>
+                </ul>
+              </div>
+              <div class="problem-block" style="margin-bottom:10px;">
+                <div class="block-label" style="color:#E03E3E;">⚠️ 예외 및 오류 처리</div>
+                <ul class="detail-list">
+                  <li><strong>ErrorCode 기반 공통 예외 구조 설계</strong></li>
+                  <li>사용자 노출 메시지와 내부 오류 코드 분리</li>
+                  <li>Rate Limit / Timeout / 요청 실패 등 AI 오류 유형 표준화</li>
+                  <li>프론트엔드 친화적 오류 메시지 전달</li>
+                </ul>
+              </div>
+              <div class="result-block" style="margin-bottom:10px;">
+                <div class="block-label" style="color:#2F6FED;">📄 문서 분석 처리</div>
+                <ul class="detail-list">
+                  <li>파일 업로드 및 URL 입력 기반 문서 분석</li>
+                  <li><strong>문서 파싱 → AI 요약 → 결과 반환 파이프라인</strong> 구성</li>
+                  <li>요약 진행 상태 관리 (ANALYZE / SUMMARY)</li>
+                </ul>
+              </div>
+              <div class="flow-block" style="margin-bottom:10px;">
+                <div class="detail-label" style="margin-bottom:8px;">🗂 요약 보관함 · 하이라이트</div>
+                <ul class="detail-list">
+                  <li>세션 단위 요약 결과 보관 및 선택 다운로드 기능 제공</li>
+                  <li>요약 결과 내 <strong>키워드 자동 추출 및 하이라이트 렌더링</strong></li>
+                  <li>문서 핵심 내용 빠른 파악 지원</li>
+                </ul>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Flow</div>
+              <div class="flow-block">
+                <p>① 파일 업로드 / URL 입력</p>
+                <p>② 문서 파싱 및 텍스트 추출</p>
+                <p>③ LLM API 요약 요청</p>
+                <p>&nbsp;&nbsp;&nbsp;├─ Gemini API 호출</p>
+                <p>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└─ 429 Rate Limit → OpenAI로 자동 Fallback</p>
+                <p>&nbsp;&nbsp;&nbsp;└─ 오류 유형별 분기 처리 (Timeout / 요청 실패 등)</p>
+                <p>④ 요약 결과 반환 + 키워드 추출 및 하이라이트</p>
+                <p>⑤ 세션 단위 보관함 저장 → 선택 다운로드</p>
+              </div>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">Screenshots</div>
+              <div class="screenshot-gallery">
+                <div class="screenshot-section">
+                  <div class="screenshot-label">메인 화면</div>
+                  <div class="screenshot-grid col-1">
+                    <div class="screenshot-wrap">
+                      <img class="screenshot-img" src="./images/메인화면.png" alt="메인 화면" />
+                      <div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="screenshot-section">
+                  <div class="screenshot-label">파일 업로드 · 요약 진행</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약_FILE.png" alt="파일 업로드 분석 중" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약_FILE2.png" alt="파일 업로드 요약 중" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                  </div>
+                </div>
+                <div class="screenshot-section">
+                  <div class="screenshot-label">요약 결과 — 파일 / URL</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약결과_FILE.png" alt="파일 요약 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약결과_URL.png" alt="URL 요약 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                  </div>
+                </div>
+                <div class="screenshot-section">
+                  <div class="screenshot-label">요약 보관함</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_1.png" alt="요약 보관함" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_2.png" alt="요약 보관함 선택" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                  </div>
+                </div>
+                <div class="screenshot-section">
+                  <div class="screenshot-label">다운로드</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_3.png" alt="다운로드" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_4.png" alt="다운로드 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                  </div>
+                </div>
+                <div class="screenshot-section">
+                  <div class="screenshot-label">Flow Chart</div>
+                  <div class="screenshot-grid col-2">
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/문서요약 Flow.png" alt="문서 요약 Flow" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/문서파싱 Flow.png" alt="문서 파싱 Flow" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </section>
 
     <!-- CAREER -->
@@ -483,7 +640,7 @@ a { color: inherit; text-decoration: none; }
             </div>
           </div>
           <div class="proj-right">
-            <span class="proj-period">2025.01 ~ 현재</span>
+            <span class="proj-period">2025.01 ~ 2026.02</span>
             <span class="proj-tag">고객사 파견</span>
             <div class="proj-toggle-icon">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -754,32 +911,27 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- SIDE PROJECT -->
-    <section class="section" id="side">
-      <div class="section-header"><span class="section-icon">🚀</span><span class="section-title">Side Project</span></div>
-
-      <div class="project-card" id="proj-side">
+      <!-- 챗봇 기획 참여 -->
+      <div class="project-card" id="proj-chatbot">
         <div class="proj-hover-overlay" aria-hidden="true">
           <div class="proj-overlay-btn">
             <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
             상세 보기
           </div>
         </div>
-        <div class="proj-header" onclick="toggleCard('proj-side')">
+        <div class="proj-header" onclick="toggleCard('proj-chatbot')">
           <div class="proj-left">
-            <div class="proj-title">DOC BRIEF</div>
-            <div class="proj-stack">Java 17 · Spring Boot · JPA · PostgreSQL · Vue 3 · OpenAI · Gemini</div>
+            <div class="proj-title">시나리오 기반 챗봇 시스템 기획 참여</div>
+            <div class="proj-stack">Spring Boot · Oracle · Drawflow · JavaScript · DB 설계 · 알고리즘 설계</div>
             <div class="proj-kpis">
-              <span class="kpi">LLM Fallback</span>
-              <span class="kpi">ErrorCode 표준화</span>
-              <span class="kpi">AI 파이프라인</span>
+              <span class="kpi">DB 9개 테이블 설계</span>
+              <span class="kpi">플러그인 비교 선정</span>
+              <span class="kpi">매칭 알고리즘 설계</span>
             </div>
           </div>
           <div class="proj-right">
-            <span class="proj-period">2026.01</span>
-            <span class="proj-tag">팀 프로젝트 · 2인</span>
+            <span class="proj-period">2025.04</span>
+            <span class="proj-tag">사내 프로젝트</span>
             <div class="proj-toggle-icon">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -789,140 +941,79 @@ a { color: inherit; text-decoration: none; }
           <div class="proj-detail-inner">
             <div class="detail-block">
               <div class="detail-label">Overview</div>
-              <p class="overview-text">복잡한 문서를 빠르게 이해할 수 있도록 AI 요약과 키워드 하이라이트를 제공하는 문서 요약 웹 서비스입니다. 예외 표준화 및 Rate Limit 대응까지 고려해 설계·구현한 <strong>백엔드 중심 프로젝트</strong>입니다.</p>
-              <div style="display:flex; gap:10px; margin-top:12px;">
-                <a class="side-link" href="https://github.com/dev-yoonddo/docbrief_api" target="_blank">🔎 GitHub →</a>
-                <a class="side-link" href="https://www.notion.so/yoonddo/DOC-BRIEF" target="_blank">💭 기획서 →</a>
+              <p class="overview-text">블록 기반 대화 흐름을 시각적으로 편집할 수 있는 <strong>시나리오 기반 챗봇 시스템</strong>의 기획 단계에 참여했습니다. 요구사항 분석부터 DB 설계, 발화 패턴 매칭 알고리즘 설계, UI/UX 플러그인 선정까지 기술적 의사결정 전반에 기여했습니다.</p>
+            </div>
+
+            <div class="detail-block">
+              <div class="detail-label">1. UI 플러그인 비교 분석 및 선정</div>
+              <p class="overview-text" style="margin-bottom:12px;">시각적 플로우 편집을 위한 플러그인 4종을 직접 검토하고, 선정 기준을 수립해 최종 결정했습니다.</p>
+              <table class="detail-table">
+                <thead><tr><th>플러그인</th><th>방식</th><th>검토 결과</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Drawflow</strong></td><td>노드 기반 선 연결</td><td>✅ 최종 선정 — JSON export/import 자동 관리, 자유 배치, 팝업 편집 구현 가능</td></tr>
+                  <tr><td>Flowy.js</td><td>자동 스냅 연결</td><td>배치 자유도 부족</td></tr>
+                  <tr><td>Sequential Workflow Designer</td><td>스텝 기반 세로 고정</td><td>고정 레이아웃으로 유연성 부족</td></tr>
+                  <tr><td>jsPlumb Toolkit</td><td>노드 연결</td><td>상용 라이선스로 제외</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-block">
+              <div class="detail-label">2. 데이터베이스 설계</div>
+              <p class="overview-text" style="margin-bottom:12px;">행정 표준 용어 기준 명명 규칙(ADM_T_ 접두사)을 적용해 총 9개 테이블을 설계했습니다. 5회 이상 구조를 반복 수정하며 유지보수성을 높이는 방향으로 결정했습니다.</p>
+              <div class="problem-block">
+                <div class="block-label">🔴 초기 설계 — 타입별 테이블 분리</div>
+                <p class="block-text">응답 데이터를 BUTTON, FILE, URL 테이블로 각각 분리 → 테이블 수 증가, 조회 복잡도 상승</p>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 개선 설계 — 응답 테이블 통합</div>
+                <p class="block-text">RESPONSE_TYPE + CONTENT 가변 컬럼 방식으로 통합 → 테이블 구조 단순화, 유지보수성 향상</p>
+                <div class="code-block">RESPONSE_TYPE = 'text'   → CONTENT: 텍스트 내용
+RESPONSE_TYPE = 'button' → CONTENT: 버튼 라벨
+RESPONSE_TYPE = 'image'  → CONTENT: 이미지 URL
+RESPONSE_TYPE = 'file'   → CONTENT: 파일 URL</div>
+              </div>
+              <div class="result-block">
+                <div class="block-label">✅ 주요 설계 결정</div>
+                <ul class="detail-list">
+                  <li><strong>발화 패턴</strong>: 키워드 1개당 행 1개 (1:N), 전체 삭제 후 INSERT 방식으로 단순화</li>
+                  <li><strong>블록 재사용</strong>: IS_GLOBAL 컬럼으로 재사용 가능 블록 표시, 복제 방식 채택으로 시나리오 간 독립성 보장</li>
+                  <li><strong>공통 컬럼 표준화</strong>: USE_YN, DELETE_YN, REGIST_DTTM, UPDATE_DTTM 전체 적용</li>
+                </ul>
               </div>
             </div>
+
             <div class="detail-block">
-              <div class="detail-label">Tech Stack</div>
-              <table class="detail-table">
-                <thead><tr><th>분류</th><th>기술</th></tr></thead>
-                <tbody>
-                  <tr><td>Backend</td><td>Java 17, Spring Boot, JPA / Hibernate, PostgreSQL</td></tr>
-                  <tr><td>Frontend</td><td>Vue 3, axios, Session / SessionStorage</td></tr>
-                  <tr><td>LLM API</td><td>OpenAI API, Gemini API</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="detail-block">
-              <div class="detail-label">Basic Info</div>
-              <table class="detail-table">
-                <thead><tr><th>항목</th><th>내용</th></tr></thead>
-                <tbody>
-                  <tr><td>구분</td><td>팀 프로젝트 · 2인</td></tr>
-                  <tr><td>역할</td><td>Developer</td></tr>
-                </tbody>
-              </table>
+              <div class="detail-label">3. 발화 패턴 매칭 알고리즘 설계</div>
+              <p class="overview-text" style="margin-bottom:12px;">사용자 입력과 등록된 발화 패턴을 자동 매칭하는 우선순위 기반 알고리즘을 설계했습니다. 가중치 수동 설정 대신 <strong>시스템 자동 계산 방식</strong>으로 사용성을 개선하고, 20개 이상의 케이스를 직접 검증했습니다.</p>
+              <div class="flow-block">
+                <p>1순위: 구문 완전 일치 (점수 1000)</p>
+                <p>2순위: 매칭 키워드 개수 (개당 10점)</p>
+                <p>3순위: 매칭 비율 — 정확도 (0~1점)</p>
+                <p>4순위: 블록 등록 순서 (SORT_ORDER)</p>
+              </div>
               <ul class="detail-list" style="margin-top:12px;">
-                <li>문서 분석 → 요약 → 응답 파이프라인 설계</li>
-                <li>AI 요약 API 및 세션 기반 처리 구조 설계</li>
-                <li>Gemini / OpenAI 다중 LLM 연동 및 Fallback 로직 구현</li>
-                <li>ErrorCode 기반 공통 예외 처리 구조 설계</li>
+                <li><strong>불용어 처리</strong>: 별도 사전 관리 없이 패턴 미매칭 단어 자동 무시 방식 채택 → 관리 포인트 감소</li>
+                <li><strong>형태소 분석기</strong>: 1차 개발 제외, 확장 시 추가 가능하도록 구조 설계</li>
               </ul>
             </div>
+
             <div class="detail-block">
-              <div class="detail-label">Core Features</div>
-              <div class="solution-block" style="margin-bottom:10px;">
-                <div class="block-label" style="color:#0F7B6C;">🤖 AI 요약 시스템</div>
-                <ul class="detail-list">
-                  <li>Gemini / OpenAI 다중 LLM 연동</li>
-                  <li><strong>429 Rate Limit 발생 시 자동 Fallback 처리</strong> — Gemini → OpenAI 자동 전환</li>
-                  <li>AI 요청/응답 예외 유형별 분리 처리</li>
-                </ul>
-              </div>
-              <div class="problem-block" style="margin-bottom:10px;">
-                <div class="block-label" style="color:#E03E3E;">⚠️ 예외 및 오류 처리</div>
-                <ul class="detail-list">
-                  <li><strong>ErrorCode 기반 공통 예외 구조 설계</strong></li>
-                  <li>사용자 노출 메시지와 내부 오류 코드 분리</li>
-                  <li>Rate Limit / Timeout / 요청 실패 등 AI 오류 유형 표준화</li>
-                  <li>프론트엔드 친화적 오류 메시지 전달</li>
-                </ul>
-              </div>
-              <div class="result-block" style="margin-bottom:10px;">
-                <div class="block-label" style="color:#2F6FED;">📄 문서 분석 처리</div>
-                <ul class="detail-list">
-                  <li>파일 업로드 및 URL 입력 기반 문서 분석</li>
-                  <li><strong>문서 파싱 → AI 요약 → 결과 반환 파이프라인</strong> 구성</li>
-                  <li>요약 진행 상태 관리 (ANALYZE / SUMMARY)</li>
-                </ul>
-              </div>
-              <div class="flow-block" style="margin-bottom:10px;">
-                <div class="detail-label" style="margin-bottom:8px;">🗂 요약 보관함 · 하이라이트</div>
-                <ul class="detail-list">
-                  <li>세션 단위 요약 결과 보관 및 선택 다운로드 기능 제공</li>
-                  <li>요약 결과 내 <strong>키워드 자동 추출 및 하이라이트 렌더링</strong></li>
-                  <li>문서 핵심 내용 빠른 파악 지원</li>
-                </ul>
-              </div>
+              <div class="detail-label">4. 블록 재사용 전략 수립</div>
+              <table class="detail-table">
+                <thead><tr><th>구분</th><th>복제 방식 (채택)</th><th>공유 방식 (비채택)</th></tr></thead>
+                <tbody>
+                  <tr><td>구조</td><td>시나리오별 독립 블록</td><td>N:M 관계 테이블 추가</td></tr>
+                  <tr><td>장점</td><td>독립 수정 가능, 단순한 구조</td><td>공통 블록 관리 편의</td></tr>
+                  <tr><td>단점</td><td>블록 중복 저장</td><td>A 수정 시 B에 영향, 복잡도 증가</td></tr>
+                </tbody>
+              </table>
             </div>
-            <div class="detail-block">
-              <div class="detail-label">Flow</div>
-              <div class="flow-block">
-                <p>① 파일 업로드 / URL 입력</p>
-                <p>② 문서 파싱 및 텍스트 추출</p>
-                <p>③ LLM API 요약 요청</p>
-                <p>&nbsp;&nbsp;&nbsp;├─ Gemini API 호출</p>
-                <p>&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└─ 429 Rate Limit → OpenAI로 자동 Fallback</p>
-                <p>&nbsp;&nbsp;&nbsp;└─ 오류 유형별 분기 처리 (Timeout / 요청 실패 등)</p>
-                <p>④ 요약 결과 반환 + 키워드 추출 및 하이라이트</p>
-                <p>⑤ 세션 단위 보관함 저장 → 선택 다운로드</p>
-              </div>
-            </div>
-            <div class="detail-block">
-              <div class="detail-label">Screenshots</div>
-              <div class="screenshot-gallery">
-                <div class="screenshot-section">
-                  <div class="screenshot-label">메인 화면</div>
-                  <div class="screenshot-grid col-1">
-                    <div class="screenshot-wrap">
-                      <img class="screenshot-img" src="./images/메인화면.png" alt="메인 화면" />
-                      <div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="screenshot-section">
-                  <div class="screenshot-label">파일 업로드 · 요약 진행</div>
-                  <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약_FILE.png" alt="파일 업로드 분석 중" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약_FILE2.png" alt="파일 업로드 요약 중" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                  </div>
-                </div>
-                <div class="screenshot-section">
-                  <div class="screenshot-label">요약 결과 — 파일 / URL</div>
-                  <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약결과_FILE.png" alt="파일 요약 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약결과_URL.png" alt="URL 요약 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                  </div>
-                </div>
-                <div class="screenshot-section">
-                  <div class="screenshot-label">요약 보관함</div>
-                  <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_1.png" alt="요약 보관함" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_2.png" alt="요약 보관함 선택" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                  </div>
-                </div>
-                <div class="screenshot-section">
-                  <div class="screenshot-label">다운로드</div>
-                  <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_3.png" alt="다운로드" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/요약보관함_4.png" alt="다운로드 결과" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                  </div>
-                </div>
-                <div class="screenshot-section">
-                  <div class="screenshot-label">Flow Chart</div>
-                  <div class="screenshot-grid col-2">
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/문서요약 Flow.png" alt="문서 요약 Flow" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                    <div class="screenshot-wrap"><img class="screenshot-img" src="./images/문서파싱 Flow.png" alt="문서 파싱 Flow" /><div class="screenshot-zoom-hint"><div class="screenshot-zoom-btn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.5"/><path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 6.5h4M6.5 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>크게 보기</div></div></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- CONTACT -->
@@ -976,7 +1067,6 @@ function toggleNav() {
 hamburgerBtn.addEventListener('click', toggleNav);
 navOverlay.addEventListener('click', closeNav);
 
-/* 모바일에서 nav 항목 클릭 시 메뉴 닫기 */
 document.querySelectorAll('.nav-item').forEach(item => {
   item.addEventListener('click', () => {
     if (window.innerWidth <= 768) closeNav();
