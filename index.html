@@ -392,10 +392,6 @@ a { color: inherit; text-decoration: none; }
             Java · Spring Boot 기반 3년차 백엔드 개발자입니다.<br>
             사용하는 사람과 유지보수하는 사람 모두를 위한 <strong>이해도 높은 구조</strong>로 개발하는 것을 중요하게 생각합니다.
           </p>
-          <div class="hero-badges">
-            <span class="badge"><span class="badge-dot"></span> 재직 중 · 엔소프트웨어</span>
-            <span class="badge">⚙️ ISTP</span>
-          </div>
         </div>
         <div class="hero-photo">
           <img src="./images/me.jpeg" alt="정윤서 프로필 사진" />
@@ -410,7 +406,7 @@ a { color: inherit; text-decoration: none; }
         <span class="section-title">About Me</span>
       </div>
       <p class="about-text">공공기관 프로젝트에서 <strong>쿼리 최적화와 인덱스 개선</strong>으로 응답 시간을 40초에서 1초로 줄였고, <strong>Jenkins 배포 자동화</strong>로 배포 시간을 80% 단축했습니다. 외부 API 연동, 게시판·보고서 시스템 고도화, 사내 공통 프레임워크 설계까지 폭넓은 실무 경험을 쌓았습니다.</p>
-      <p class="about-text">동작하는 코드보다 <strong>6개월 뒤에도 읽기 쉬운 코드</strong>를 더 중요하게 생각합니다. 구조를 먼저 고민하고, 그 구조가 팀 전체의 속도를 높인다고 믿습니다.</p>
+      <p class="about-text">동작하는 코드보다 <strong>6개월 뒤에도 읽기 쉬운 코드</strong>를 더 중요하게 생각합니다. 구조를 먼저 고민하고 그 구조가 팀 전체의 속도를 높인다고 믿습니다.</p>
       <div class="about-quote">"코드는 결국 사람이 읽고, 사람이 고친다"는 생각을 기준으로 선택합니다.</div>
       <div class="stat-grid">
         <div class="stat-card"><div class="stat-val">97.5<span>%</span></div><div class="stat-label">쿼리 응답 단축<br>40초 → 1초</div></div>
@@ -621,6 +617,264 @@ a { color: inherit; text-decoration: none; }
     <!-- CAREER -->
     <section class="section" id="career">
       <div class="section-header"><span class="section-icon">💼</span><span class="section-title">Career</span></div>
+
+      <!-- HR 시스템 핵심 비즈니스 로직 개선 -->
+      <div class="project-card" id="proj-hr">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
+        </div>
+        <div class="proj-header" onclick="toggleCard('proj-hr')">
+          <div class="proj-left">
+            <div class="proj-title">HR 시스템 핵심 비즈니스 로직 개선</div>
+            <div class="proj-stack">Spring Boot · Oracle · MyBatis</div>
+            <div class="proj-kpis">
+              <span class="kpi">급여 오산 차단</span>
+              <span class="kpi">법령 위반 사전 차단</span>
+              <span class="kpi">야간근무 재설계</span>
+              <span class="kpi">쿼리 정합성</span>
+              <span class="kpi">휴게시간 다중 등록</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2026.03 ~ 2026.09</span>
+            <span class="proj-tag">고객사 파견 · 3인 · PL</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">HR 시스템의 급여·근태 관련 핵심 비즈니스 로직에서 발생하던 <strong>계산 오류와 법령 위반 리스크를 개선</strong>한 프로젝트입니다. 호봉 계산, 휴가 검증, 야간근무 시간 산정, 근무표 등록 쿼리까지 데이터 정확성과 법적 준수 여부에 직결되는 로직을 재설계했으며, 휴게시간 다중 등록 구조 개선을 통해 쿼리 복잡도를 대폭 줄였습니다.</p>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">개선 항목</div>
+              <table class="detail-table">
+                <thead>
+                  <tr><th>항목</th><th>문제</th><th>해결</th><th>결과</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>호봉 계산 로직</strong></td>
+                    <td>단일 Oracle 함수에서 모든 직군을 처리 → 직군별 계산 분기 불가</td>
+                    <td>직군별 분기 처리 구조로 재설계, 직군마다 독립된 계산 로직 적용</td>
+                    <td>직군 추가 시 기존 로직 영향 없이 확장 가능, 급여 오산 원천 차단</td>
+                  </tr>
+                  <tr>
+                    <td><strong>법령 기반 휴가 검증</strong></td>
+                    <td>육아휴가 실근무일 조건, 모성보호휴가 중복 불가 조건이 애플리케이션 레벨에서만 처리 → 우회 가능성 존재</td>
+                    <td>검증 조건을 쿼리 레벨로 이관, DB에서 법령 조건을 직접 필터링</td>
+                    <td>법령 위반 케이스를 DB 단에서 사전 차단, 애플리케이션 로직 단순화</td>
+                  </tr>
+                  <tr>
+                    <td><strong>야간근무 시간 계산</strong></td>
+                    <td>자정을 넘기는 근무 시간 계산 시 오류 발생 (예: 23:00~02:00)</td>
+                    <td>자정 기준으로 근무 시간을 분할하여 날짜별로 독립 계산하는 방식으로 재설계</td>
+                    <td>자정 초과 근무 시간 정확히 산정, 야간수당 오산 차단</td>
+                  </tr>
+                  <tr>
+                    <td><strong>근무표 일괄 등록 쿼리</strong></td>
+                    <td>주(Week) 경계에 걸친 데이터가 조건 누락으로 잘못 등록됨</td>
+                    <td>주 경계 데이터를 필터링하는 조건 추가, 등록 대상 범위 명확화</td>
+                    <td>주 경계 데이터 오등록 방지, 근무표 데이터 정합성 확보</td>
+                  </tr>
+                  <tr>
+                    <td><strong>휴게시간 다중 등록</strong></td>
+                    <td>WRK_T_WORK_DTL 등 4개 테이블에 REST_BGNG_TIME1·REST_END_TIME1 컬럼으로 휴게시간 1개 고정 보유 → 다중 등록 불가, 휴가검증·근무표·계산 함수 등 20여 개 쿼리에 분산</td>
+                    <td>WRK_T_WORK_DTL_EXCL 별도 테이블 신설(REST_SEQ 기반 다중 행 구조), 기존 데이터 마이그레이션 후 휴가검증 쿼리·근무표 쿼리·휴가사용시간 계산 함수(FN_VAC_CALC) 등을 새 테이블 JOIN 방식으로 전환</td>
+                    <td>휴게시간 N건 다중 등록 가능, 분산된 EXCL 컬럼 의존성 제거, 계산 로직 일원화로 유지보수 부담 대폭 개선</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">휴게시간 구조 개선 — Before / After</div>
+              <!-- SVG 다이어그램 -->
+              <div style="overflow-x:auto; margin-top:8px;">
+                <svg viewBox="0 0 720 270" width="100%" style="max-width:720px; display:block; font-family:'Noto Sans KR',sans-serif;">
+                  <!-- 제목 -->
+                  <text x="175" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#9B9B97" letter-spacing="1.5">BEFORE</text>
+                  <text x="535" y="22" text-anchor="middle" font-size="11" font-weight="700" fill="#9B9B97" letter-spacing="1.5">AFTER</text>
+
+                  <!-- BEFORE: 근무표 상세 테이블 -->
+                  <rect x="40" y="36" width="260" height="140" rx="7" fill="#FFF5F5" stroke="#E03E3E" stroke-width="1.5"/>
+                  <text x="170" y="56" text-anchor="middle" font-size="11.5" font-weight="700" fill="#E03E3E">WRK_T_WORK_DTL</text>
+                  <line x1="40" y1="64" x2="300" y2="64" stroke="#E03E3E" stroke-width="1" stroke-dasharray="4,3"/>
+                  <text x="60" y="82" font-size="10.5" fill="#555550">WORK_DTL_ID (PK)</text>
+                  <text x="60" y="100" font-size="10.5" fill="#555550">EMP_ID</text>
+                  <text x="60" y="118" font-size="10.5" fill="#E03E3E" font-weight="600">REST_BGNG_TIME1  ← 1개 고정</text>
+                  <text x="60" y="136" font-size="10.5" fill="#E03E3E" font-weight="600">REST_END_TIME1   ← 1개 고정</text>
+                  <text x="60" y="154" font-size="10.5" fill="#555550">...</text>
+
+                  <!-- BEFORE: 문제 표시 -->
+                  <rect x="55" y="188" width="230" height="28" rx="5" fill="#FFF5F5" stroke="#E03E3E" stroke-width="1"/>
+                  <text x="170" y="207" text-anchor="middle" font-size="11" fill="#E03E3E">다중 휴게시간 등록 불가 · 4개 테이블 분산</text>
+
+                  <!-- 구분선 -->
+                  <line x1="355" y1="30" x2="355" y2="235" stroke="#E5E5E3" stroke-width="1.5" stroke-dasharray="6,4"/>
+                  <text x="355" y="250" text-anchor="middle" font-size="18" fill="#9B9B97">→</text>
+
+                  <!-- AFTER: 근무표 상세 테이블 -->
+                  <rect x="375" y="36" width="155" height="120" rx="7" fill="#F0FAF8" stroke="#0F7B6C" stroke-width="1.5"/>
+                  <text x="452" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#0F7B6C">WRK_T_WORK_DTL</text>
+                  <line x1="375" y1="64" x2="530" y2="64" stroke="#0F7B6C" stroke-width="1" stroke-dasharray="4,3"/>
+                  <text x="393" y="82" font-size="10.5" fill="#555550">WORK_DTL_ID (PK)</text>
+                  <text x="393" y="100" font-size="10.5" fill="#555550">EMP_ID</text>
+                  <text x="393" y="118" font-size="10.5" fill="#9B9B97" font-style="italic">EXCL 컬럼 제거됨</text>
+                  <text x="393" y="136" font-size="10.5" fill="#555550">...</text>
+
+                  <!-- 연결선 -->
+                  <line x1="530" y1="96" x2="553" y2="96" stroke="#0F7B6C" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+                  <!-- AFTER: 휴게시간 전용 테이블 -->
+                  <rect x="553" y="50" width="152" height="130" rx="7" fill="#EEF3FD" stroke="#2F6FED" stroke-width="1.5"/>
+                  <text x="629" y="68" text-anchor="middle" font-size="10" font-weight="700" fill="#2F6FED">WRK_T_WORK_DTL_EXCL</text>
+                  <line x1="553" y1="76" x2="705" y2="76" stroke="#2F6FED" stroke-width="1" stroke-dasharray="4,3"/>
+                  <text x="568" y="93" font-size="10.5" fill="#555550">REST_EXCL_ID (PK)</text>
+                  <text x="568" y="111" font-size="10.5" fill="#555550">WORK_DTL_ID (FK)</text>
+                  <text x="568" y="129" font-size="10.5" fill="#555550">REST_SEQ</text>
+                  <text x="568" y="147" font-size="10.5" fill="#2F6FED" font-weight="600">REST_BGNG_TIME</text>
+                  <text x="568" y="163" font-size="10.5" fill="#2F6FED" font-weight="600">REST_END_TIME</text>
+
+                  <!-- AFTER: 결과 표시 -->
+                  <rect x="385" y="188" width="310" height="28" rx="5" fill="#F0FAF8" stroke="#0F7B6C" stroke-width="1"/>
+                  <text x="540" y="207" text-anchor="middle" font-size="11" fill="#0F7B6C">N건 다중 등록 가능 · JOIN 방식으로 계산 로직 일원화</text>
+
+                  <!-- 화살표 마커 -->
+                  <defs>
+                    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                      <path d="M0,0 L0,6 L8,3 z" fill="#0F7B6C"/>
+                    </marker>
+                  </defs>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card" id="proj-chatbot">
+        <div class="proj-hover-overlay" aria-hidden="true">
+          <div class="proj-overlay-btn">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            상세 보기
+          </div>
+        </div>
+        <div class="proj-header" onclick="toggleCard('proj-chatbot')">
+          <div class="proj-left">
+            <div class="proj-title">시나리오 기반 챗봇 시스템 개발</div>
+            <div class="proj-stack">Spring Boot · Oracle · React.js · JavaScript · Drawflow · Claude Code · tmux</div>
+            <div class="proj-kpis">
+              <span class="kpi">DB 9개 테이블 설계</span>
+              <span class="kpi">매칭 알고리즘 설계</span>
+              <span class="kpi">AI 협업 개발</span>
+              <span class="kpi">공통 소스 기능 추가</span>
+            </div>
+          </div>
+          <div class="proj-right">
+            <span class="proj-period">2026.02 ~ 2026.03</span>
+            <span class="proj-tag">사내 프로젝트 · 4인</span>
+            <div class="proj-toggle-icon">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="proj-detail">
+          <div class="proj-detail-inner">
+            <div class="detail-block">
+              <div class="detail-label">Overview</div>
+              <p class="overview-text">블록 기반 대화 흐름을 시각적으로 편집할 수 있는 <strong>시나리오 기반 챗봇 시스템</strong>을 기획부터 개발까지 담당했습니다. 요구사항 분석, DB 설계, 발화 패턴 매칭 알고리즘 설계, UI/UX 플러그인 선정 등 기술적 의사결정을 주도하고, 기존 공통 소스에 챗봇 기능을 추가하는 방식으로 개발을 완료했습니다. <strong>Claude Code와 Agent Team(tmux 기반 멀티 에이전트 구조)</strong>을 활용한 바이브코딩 방식으로 4인이 협업 개발했습니다.</p>
+            </div>
+            <div class="detail-block">
+              <div class="detail-label">개발 방식</div>
+              <div class="solution-block">
+                <div class="block-label" style="color:#0F7B6C;">🤖 AI 협업 개발 구조</div>
+                <ul class="detail-list">
+                  <li><strong>AI 기반 협업 개발 방식 도입</strong>: Claude Code Agent Team과 tmux 기반 멀티 에이전트 구조를 활용한 바이브코딩으로 4인 협업 개발 — 단기간 내 기능 구현 완료</li>
+                  <li><strong>멀티 에이전트 구성</strong>: 쉘 파일로 역할별 에이전트 팀 구성, tmux로 여러 에이전트가 동시에 다른 모듈을 병렬 개발</li>
+                  <li>기존 공통 소스 구조를 유지하며 챗봇 기능을 모듈 단위로 추가</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="detail-block">
+              <div class="detail-label">1. UI 플러그인 비교 분석 및 선정</div>
+              <p class="overview-text" style="margin-bottom:12px;">시각적 플로우 편집을 위한 플러그인 4종을 직접 검토하고, 선정 기준을 수립해 최종 결정했습니다.</p>
+              <table class="detail-table">
+                <thead><tr><th>플러그인</th><th>방식</th><th>검토 결과</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Drawflow</strong></td><td>노드 기반 선 연결</td><td>✅ 최종 선정 — JSON export/import 자동 관리, 자유 배치, 팝업 편집 구현 가능</td></tr>
+                  <tr><td>Flowy.js</td><td>자동 스냅 연결</td><td>배치 자유도 부족</td></tr>
+                  <tr><td>Sequential Workflow Designer</td><td>스텝 기반 세로 고정</td><td>고정 레이아웃으로 유연성 부족</td></tr>
+                  <tr><td>jsPlumb Toolkit</td><td>노드 연결</td><td>상용 라이선스로 제외</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="detail-block">
+              <div class="detail-label">2. 데이터베이스 설계</div>
+              <p class="overview-text" style="margin-bottom:12px;">행정 표준 용어 기준 명명 규칙(ADM_T_ 접두사)을 적용해 총 9개 테이블을 설계했습니다. 5회 이상 구조를 반복 수정하며 유지보수성을 높이는 방향으로 결정했습니다.</p>
+              <div class="problem-block">
+                <div class="block-label">🔴 초기 설계 — 타입별 테이블 분리</div>
+                <p class="block-text">응답 데이터를 BUTTON, FILE, URL 테이블로 각각 분리 → 테이블 수 증가, 조회 복잡도 상승</p>
+              </div>
+              <div class="solution-block">
+                <div class="block-label">🟢 개선 설계 — 응답 테이블 통합</div>
+                <p class="block-text">RESPONSE_TYPE + CONTENT 가변 컬럼 방식으로 통합 → 테이블 구조 단순화, 유지보수성 향상</p>
+                <div class="code-block">RESPONSE_TYPE = 'text'   → CONTENT: 텍스트 내용
+RESPONSE_TYPE = 'button' → CONTENT: 버튼 라벨
+RESPONSE_TYPE = 'image'  → CONTENT: 이미지 URL
+RESPONSE_TYPE = 'file'   → CONTENT: 파일 URL</div>
+              </div>
+              <div class="result-block">
+                <div class="block-label">✅ 주요 설계 결정</div>
+                <ul class="detail-list">
+                  <li><strong>발화 패턴</strong>: 키워드 1개당 행 1개 (1:N), 전체 삭제 후 INSERT 방식으로 단순화</li>
+                  <li><strong>블록 재사용</strong>: IS_GLOBAL 컬럼으로 재사용 가능 블록 표시, 복제 방식 채택으로 시나리오 간 독립성 보장</li>
+                  <li><strong>공통 컬럼 표준화</strong>: USE_YN, DELETE_YN, REGIST_DTTM, UPDATE_DTTM 전체 적용</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="detail-block">
+              <div class="detail-label">3. 발화 패턴 매칭 알고리즘 설계</div>
+              <p class="overview-text" style="margin-bottom:12px;">사용자 입력과 등록된 발화 패턴을 자동 매칭하는 우선순위 기반 알고리즘을 설계했습니다. 가중치 수동 설정 대신 <strong>시스템 자동 계산 방식</strong>으로 사용성을 개선하고, 20개 이상의 케이스를 직접 검증했습니다.</p>
+              <div class="flow-block">
+                <p>1순위: 구문 완전 일치 (점수 1000)</p>
+                <p>2순위: 매칭 키워드 개수 (개당 10점)</p>
+                <p>3순위: 매칭 비율 — 정확도 (0~1점)</p>
+                <p>4순위: 블록 등록 순서 (SORT_ORDER)</p>
+              </div>
+              <ul class="detail-list" style="margin-top:12px;">
+                <li><strong>불용어 처리</strong>: 별도 사전 관리 없이 패턴 미매칭 단어 자동 무시 방식 채택 → 관리 포인트 감소</li>
+                <li><strong>형태소 분석기</strong>: 1차 개발 제외, 확장 시 추가 가능하도록 구조 설계</li>
+              </ul>
+            </div>
+
+            <div class="detail-block">
+              <div class="detail-label">4. 블록 재사용 전략 수립</div>
+              <table class="detail-table">
+                <thead><tr><th>구분</th><th>복제 방식 (채택)</th><th>공유 방식 (비채택)</th></tr></thead>
+                <tbody>
+                  <tr><td>구조</td><td>시나리오별 독립 블록</td><td>N:M 관계 테이블 추가</td></tr>
+                  <tr><td>장점</td><td>독립 수정 가능, 단순한 구조</td><td>공통 블록 관리 편의</td></tr>
+                  <tr><td>단점</td><td>블록 중복 저장</td><td>A 수정 시 B에 영향, 복잡도 증가</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+    </section>
 
       <div class="project-card" id="proj1">
         <div class="proj-hover-overlay" aria-hidden="true">
@@ -852,7 +1106,7 @@ a { color: inherit; text-decoration: none; }
             </div>
           </div>
           <div class="proj-right">
-            <span class="proj-period">2024.05 ~ 현재</span>
+            <span class="proj-period">2024.05 ~ 2026.09</span>
             <span class="proj-tag">사내 프로젝트 · 4인+</span>
             <div class="proj-toggle-icon">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -863,7 +1117,7 @@ a { color: inherit; text-decoration: none; }
           <div class="proj-detail-inner">
             <div class="detail-block">
               <div class="detail-label">Overview</div>
-              <p class="overview-text">입사 후 약 3개월간 사내 프레임워크와 공통 코드 구조를 익히며 실무 기반을 다진 뒤, 현재는 각 관리 메뉴의 UI를 <strong>JSON Spec 선언만으로 자동 렌더링하는 공통 프레임워크</strong>를 설계·개발하고 있습니다.</p>
+              <p class="overview-text">입사 후 약 3개월간 사내 프레임워크와 공통 코드 구조를 익히며 실무 기반을 다진 뒤, 각 관리 메뉴의 UI를 <strong>JSON Spec 선언만으로 자동 렌더링하는 공통 프레임워크</strong>를 설계·개발했습니다.</p>
             </div>
             <div class="detail-block">
               <div class="detail-label">초기 — 신규 기능 추가 및 공통 유틸 개발</div>
@@ -873,7 +1127,7 @@ a { color: inherit; text-decoration: none; }
               </ul>
             </div>
             <div class="detail-block">
-              <div class="detail-label">Spec 기반 UI 렌더링 공통 프레임워크 (진행 중)</div>
+              <div class="detail-label">Spec 기반 UI 렌더링 공통 프레임워크</div>
               <div class="problem-block">
                 <div class="block-label">🔴 배경 및 문제</div>
                 <p class="block-text"><strong>각 관리 메뉴마다 HTML + JS 파일이 1:1로 존재</strong>하는 구조였습니다. 메뉴가 추가될 때마다 동일한 패턴의 코드를 반복 작성해야 했고, UI 변경 시 각 파일을 개별적으로 수정해야 하는 유지보수 부담이 있었습니다.</p>
@@ -911,111 +1165,7 @@ a { color: inherit; text-decoration: none; }
           </div>
         </div>
       </div>
-      <!-- 챗봇 기획 참여 -->
-      <div class="project-card" id="proj-chatbot">
-        <div class="proj-hover-overlay" aria-hidden="true">
-          <div class="proj-overlay-btn">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-            상세 보기
-          </div>
-        </div>
-        <div class="proj-header" onclick="toggleCard('proj-chatbot')">
-          <div class="proj-left">
-            <div class="proj-title">시나리오 기반 챗봇 시스템 기획 참여</div>
-            <div class="proj-stack">Spring Boot · Oracle · Drawflow · JavaScript · DB 설계 · 알고리즘 설계</div>
-            <div class="proj-kpis">
-              <span class="kpi">DB 9개 테이블 설계</span>
-              <span class="kpi">플러그인 비교 선정</span>
-              <span class="kpi">매칭 알고리즘 설계</span>
-            </div>
-          </div>
-          <div class="proj-right">
-            <span class="proj-period">2025.04</span>
-            <span class="proj-tag">사내 프로젝트</span>
-            <div class="proj-toggle-icon">
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#9B9B97" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-          </div>
-        </div>
-        <div class="proj-detail">
-          <div class="proj-detail-inner">
-            <div class="detail-block">
-              <div class="detail-label">Overview</div>
-              <p class="overview-text">블록 기반 대화 흐름을 시각적으로 편집할 수 있는 <strong>시나리오 기반 챗봇 시스템</strong>의 기획 단계에 참여했습니다. 요구사항 분석부터 DB 설계, 발화 패턴 매칭 알고리즘 설계, UI/UX 플러그인 선정까지 기술적 의사결정 전반에 기여했습니다.</p>
-            </div>
-
-            <div class="detail-block">
-              <div class="detail-label">1. UI 플러그인 비교 분석 및 선정</div>
-              <p class="overview-text" style="margin-bottom:12px;">시각적 플로우 편집을 위한 플러그인 4종을 직접 검토하고, 선정 기준을 수립해 최종 결정했습니다.</p>
-              <table class="detail-table">
-                <thead><tr><th>플러그인</th><th>방식</th><th>검토 결과</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>Drawflow</strong></td><td>노드 기반 선 연결</td><td>✅ 최종 선정 — JSON export/import 자동 관리, 자유 배치, 팝업 편집 구현 가능</td></tr>
-                  <tr><td>Flowy.js</td><td>자동 스냅 연결</td><td>배치 자유도 부족</td></tr>
-                  <tr><td>Sequential Workflow Designer</td><td>스텝 기반 세로 고정</td><td>고정 레이아웃으로 유연성 부족</td></tr>
-                  <tr><td>jsPlumb Toolkit</td><td>노드 연결</td><td>상용 라이선스로 제외</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="detail-block">
-              <div class="detail-label">2. 데이터베이스 설계</div>
-              <p class="overview-text" style="margin-bottom:12px;">행정 표준 용어 기준 명명 규칙(ADM_T_ 접두사)을 적용해 총 9개 테이블을 설계했습니다. 5회 이상 구조를 반복 수정하며 유지보수성을 높이는 방향으로 결정했습니다.</p>
-              <div class="problem-block">
-                <div class="block-label">🔴 초기 설계 — 타입별 테이블 분리</div>
-                <p class="block-text">응답 데이터를 BUTTON, FILE, URL 테이블로 각각 분리 → 테이블 수 증가, 조회 복잡도 상승</p>
-              </div>
-              <div class="solution-block">
-                <div class="block-label">🟢 개선 설계 — 응답 테이블 통합</div>
-                <p class="block-text">RESPONSE_TYPE + CONTENT 가변 컬럼 방식으로 통합 → 테이블 구조 단순화, 유지보수성 향상</p>
-                <div class="code-block">RESPONSE_TYPE = 'text'   → CONTENT: 텍스트 내용
-RESPONSE_TYPE = 'button' → CONTENT: 버튼 라벨
-RESPONSE_TYPE = 'image'  → CONTENT: 이미지 URL
-RESPONSE_TYPE = 'file'   → CONTENT: 파일 URL</div>
-              </div>
-              <div class="result-block">
-                <div class="block-label">✅ 주요 설계 결정</div>
-                <ul class="detail-list">
-                  <li><strong>발화 패턴</strong>: 키워드 1개당 행 1개 (1:N), 전체 삭제 후 INSERT 방식으로 단순화</li>
-                  <li><strong>블록 재사용</strong>: IS_GLOBAL 컬럼으로 재사용 가능 블록 표시, 복제 방식 채택으로 시나리오 간 독립성 보장</li>
-                  <li><strong>공통 컬럼 표준화</strong>: USE_YN, DELETE_YN, REGIST_DTTM, UPDATE_DTTM 전체 적용</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="detail-block">
-              <div class="detail-label">3. 발화 패턴 매칭 알고리즘 설계</div>
-              <p class="overview-text" style="margin-bottom:12px;">사용자 입력과 등록된 발화 패턴을 자동 매칭하는 우선순위 기반 알고리즘을 설계했습니다. 가중치 수동 설정 대신 <strong>시스템 자동 계산 방식</strong>으로 사용성을 개선하고, 20개 이상의 케이스를 직접 검증했습니다.</p>
-              <div class="flow-block">
-                <p>1순위: 구문 완전 일치 (점수 1000)</p>
-                <p>2순위: 매칭 키워드 개수 (개당 10점)</p>
-                <p>3순위: 매칭 비율 — 정확도 (0~1점)</p>
-                <p>4순위: 블록 등록 순서 (SORT_ORDER)</p>
-              </div>
-              <ul class="detail-list" style="margin-top:12px;">
-                <li><strong>불용어 처리</strong>: 별도 사전 관리 없이 패턴 미매칭 단어 자동 무시 방식 채택 → 관리 포인트 감소</li>
-                <li><strong>형태소 분석기</strong>: 1차 개발 제외, 확장 시 추가 가능하도록 구조 설계</li>
-              </ul>
-            </div>
-
-            <div class="detail-block">
-              <div class="detail-label">4. 블록 재사용 전략 수립</div>
-              <table class="detail-table">
-                <thead><tr><th>구분</th><th>복제 방식 (채택)</th><th>공유 방식 (비채택)</th></tr></thead>
-                <tbody>
-                  <tr><td>구조</td><td>시나리오별 독립 블록</td><td>N:M 관계 테이블 추가</td></tr>
-                  <tr><td>장점</td><td>독립 수정 가능, 단순한 구조</td><td>공통 블록 관리 편의</td></tr>
-                  <tr><td>단점</td><td>블록 중복 저장</td><td>A 수정 시 B에 영향, 복잡도 증가</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-    </section>
-
+      <!-- 챗봇 시스템 개발 -->
     <!-- CONTACT -->
     <section class="section" id="contact">
       <div class="section-header"><span class="section-icon">✉️</span><span class="section-title">Contact</span></div>
